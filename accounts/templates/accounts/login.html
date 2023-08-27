@@ -13,7 +13,7 @@
             <div class="row">
               <div class="col-lg-6 col-md-12 py-lg-4 py-md-3 py-2 align-self-center main_vector_img">
                 <div class="login_logo">
-                  <a href="index-2.html"><img src="{% static 'img/login_logo.png'%}" alt="" class="img-fluid" /></a>
+                  <a href="{% url 'home:index' %}"><img src="{% static 'img/login_logo.png'%}" alt="" class="img-fluid" /></a>
                 </div>
                 <div class="mt-3 login_vector_img text-center">
                   <img src="{% static 'img/login/Vector.png'%}" alt="" class="img-fluid" />
@@ -60,7 +60,7 @@
                       <button type="submit" class="btn btn-primary nex text-center">Login</button>
                     </div>
                     <div class="col-lg-6 col-md-6 text-center sig_up">
-                      <a href="signup-page.html"><button type="button" class="btn btn-primary rese text-center">Sign up</button></a>
+                      <a href="{% url 'accounts:signup' %}"><button type="button" class="btn btn-primary rese text-center">Sign up</button></a>
                     </div>
                     <div class="col-lg-12 txt1 text-left mt-3 log_in">
                       <p class="mb-0">By signing up, you agree to Mixideo</p>

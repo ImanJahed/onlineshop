@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
@@ -42,6 +43,9 @@ class User(AbstractBaseUser):
         """Is the user a member of staff?"""
         return self.is_admin
 
+    def get_absolute_url(self):
+        return reverse("accounts:dash", kwargs={"pk": self.pk})
+
 
 
 class Profile(models.Model):
@@ -50,9 +54,11 @@ class Profile(models.Model):
 
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    username = models.CharField(max_length=100, unique=True)
-    phone_number = models.CharField(max_length=11, unique=True, verbose_name=_('Phone Number'))
-    image = models.ImageField(upload_to='img/profie')
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    username = models.CharField(max_length=100) # goto user model
+    phone_number = models.CharField(max_length=11, verbose_name=_('Phone Number'))
+    image = models.ImageField(upload_to='img/profie', blank=True, null=True)
     address = models.TextField()
     postal_code = models.CharField(max_length=10)
     city = models.CharField(max_length=50)
@@ -61,5 +67,8 @@ class Profile(models.Model):
     def __str__(self):
         if self.username:
             return self.username
-        return self.phone_number
+        elif self.phone_number:
+            return self.phone_number
+        return self.user.email
+
 

@@ -1,10 +1,11 @@
-from typing import Any
+
+from typing import Any, Dict
 from django import forms
-from .models import User
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
+from .models import User, Profile
 
 class UserCreationForm(forms.ModelForm):
     """ A form for creating new users. Includes all the required
@@ -16,7 +17,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password')
+        fields = ('email',)
 
     def clean_password2(self):
         password1 = self.cleaned_data['password1']
@@ -47,3 +48,23 @@ class UserChangeForm(forms.ModelForm):
 class UserLoginForm(forms.Form):
     email_or_phone_number = forms.CharField(required=False)
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+class DashboardForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        exclude = 'user',
+
+    def clean_usernam(self):
+        username = self.cleaned_data['username']
+        if Profile.objects.filter(username=username).exists():
+            raise ValueError("This Username already Taken")
+        return username
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data['phone_number']
+        if Profile.objects.filter(phone_number=phone_number).exists():
+            raise ValueError('This Phone Number already exists')
+        return phone_number
+

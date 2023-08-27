@@ -149,3 +149,8 @@ MESSAGE_TAGS = {
         messages.WARNING: 'alert-warning',
         messages.ERROR: 'alert-danger',
  }
+
+
+# Authentication config
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

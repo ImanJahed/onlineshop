@@ -9,7 +9,6 @@ class EmailPhoneUsernameAuthenticationBackend(object):
     @staticmethod
     def authenticate(request, username=None,password=None):
 
-
         try:
             user = User.objects.get(Q(profile__phone_number=username) | Q(email=username))
 
