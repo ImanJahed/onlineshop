@@ -32,12 +32,11 @@ class UserLoginView(View):
 
             cd = form.cleaned_data
 
-            user = EP.authenticate(
-                request, username=cd['email_or_phone_number'], password=cd['password'])
+            user = EP.authenticate(request, username=cd['email_or_phone_number'], password=cd['password'])
+            print(user)
             if user:
                 login(request, user)
-                messages.success(
-                    request, "You have successfuly logged in", 'success')
+
                 return redirect('home:index')
 
             else:
@@ -48,19 +47,19 @@ class UserLoginView(View):
                     messages.error(
                         request, 'Your Phone Number or password incorrect')
 
-        print('errors')
         return render(request, self.template_name, {'form': form})
 
 
 class Dashboard(LoginRequiredMixin, View):
     form_class = DashboardForm
     template_name = 'accounts/dashboard.html'
+    login_url = reverse_lazy('accounts:user_login')
 
-    def get(self, request,pk):
+    def get(self, request, pk):
         profile = Profile.objects.get(pk=pk)
 
         form = self.form_class(instance=profile)
-        return render(request, self.template_name, {'form': form, 'profile':profile})
+        return render(request, self.template_name, {'form': form, 'profile': profile})
 
     def post(self, request, pk):
         user = User.objects.get(email=request.user)
@@ -68,49 +67,26 @@ class Dashboard(LoginRequiredMixin, View):
         form = self.form_class(request.POST, instance=profile)
         print(form)
         if form.is_valid():
-            # update_profile, new_profile = Profile.objects.update_or_create(user=request.user)
             form.save()
             return render(request, self.template_name, {'form': form})
-        print('invalid')
+
         return render(request, self.template_name, {'form': form})
 
 
-# class RegistrationUserView(View):
-#     def get(self, request):
-#         form = UserCreationForm
-#         return render(request, 'accounts/signup.html', {'form':form})
-
-#     def post(self, request):
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password2'])
-#             profile=Profile.objects.create(user=user)
-#             if user:
-#                 login(request, user)
-#                 return redirect('accounts:dash', profile.pk)
-#         return render(request, 'accounts/signup.html', {'fomr':form})
-
 class RegistrationUserView(CreateView):
     form_class = UserCreationForm
-
     template_name = 'accounts/signup.html'
 
     def form_valid(self, form):
-        user = User.objects.create(email=form.cleaned_data['email'], password=form.cleaned_data['password2'])
+        user = User.objects.create_user(
+            email=form.cleaned_data['email'], password=form.cleaned_data['password1'])
+
+        user.save()
+        
+        user = authenticate(email=form.cleaned_data['email'], password=form.cleaned_data['password1'])
+
+        login(self.request, user)
+
         profile = Profile.objects.create(user=user)
-        is_avalibale = authenticate(email=form.cleaned_data['email'], password=form.cleaned_data['password2'])
-        if is_avalibale:
-            login(self.request, user)
+
         return redirect('accounts:dash', profile.pk)
-
-    # def post(self, request) :
-    #     form = self.form_class(request.POST)
-    #     if form.is_valid():
-    #         user = User.objects.create(email=form.cleaned_data['email'], password=form.cleaned_data['password2'])
-    #         print(user)
-    #         login(request, user)
-
-    #         profile = Profile.objects.create(user=user)
-
-    #         return redirect('accounts:dash', profile.pk)

@@ -22,8 +22,8 @@ class UserManager(UserManager):
             **extra_fields
         )
         user.set_password(password)
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
+        # extra_fields.setdefault('is_staff', False)
+        # extra_fields.setdefault('is_superuser', False)
 
         user.save()
         return user
@@ -38,7 +38,7 @@ class UserManager(UserManager):
         Returns:
             _type_: user
         """
-        user = self.create_user(email=email, password=password, **extra_fields)
+        user = self.create_user(email, password=password, **extra_fields)
 
         user.is_admin = True
         user.save()

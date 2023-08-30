@@ -227,7 +227,12 @@
                     <ul class="shopping-cart">
                       {% if request.user.is_authenticated %}
                       <li class="dropdown-menu r_menu dropdown-menu-right">
-                        <a class="dropdown-item font-weight-bolder">{{request.user.profile.username}}</a>
+                        <a class="dropdown-item font-weight-bolder">
+                          {% if request.user.username %}
+                          {% else %}
+                          {{request.user.email}}
+                          {% endif %}
+                          </a>
                       <a class="dropdown-item font-weight-bolder" href="{% url 'logout' %}">log out
                       </a>
                     </li>
