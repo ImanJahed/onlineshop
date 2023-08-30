@@ -1,20 +1,13 @@
-
-import email
-import profile
-from typing import Any, Optional
-from urllib import request
-from django.db import models
-from django.forms.models import BaseModelForm
-from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.views.generic import View, CreateView, DetailView, FormView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .backends import EmailPhoneUsernameAuthenticationBackend as EP
 from .models import User, Profile
 from .forms import UserCreationForm, UserLoginForm, DashboardForm
+
 
 # USER= get_user_model()
 
@@ -59,7 +52,7 @@ class UserLoginView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class Dashboard(View):
+class Dashboard(LoginRequiredMixin, View):
     form_class = DashboardForm
     template_name = 'accounts/dashboard.html'
 
@@ -103,14 +96,21 @@ class RegistrationUserView(CreateView):
 
     template_name = 'accounts/signup.html'
 
+    def form_valid(self, form):
+        user = User.objects.create(email=form.cleaned_data['email'], password=form.cleaned_data['password2'])
+        profile = Profile.objects.create(user=user)
+        is_avalibale = authenticate(email=form.cleaned_data['email'], password=form.cleaned_data['password2'])
+        if is_avalibale:
+            login(self.request, user)
+        return redirect('accounts:dash', profile.pk)
 
-    def post(self, request) :
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user = User.objects.create(email=form.cleaned_data['email'], password=form.cleaned_data['password2'])
-            print(user)
-            login(request, user)
+    # def post(self, request) :
+    #     form = self.form_class(request.POST)
+    #     if form.is_valid():
+    #         user = User.objects.create(email=form.cleaned_data['email'], password=form.cleaned_data['password2'])
+    #         print(user)
+    #         login(request, user)
 
-            profile = Profile.objects.create(user=user)
+    #         profile = Profile.objects.create(user=user)
 
-            return redirect('accounts:dash', profile.pk)
+    #         return redirect('accounts:dash', profile.pk)

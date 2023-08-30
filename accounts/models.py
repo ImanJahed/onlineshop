@@ -1,3 +1,4 @@
+import profile
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.urls import reverse
@@ -24,6 +25,8 @@ class User(AbstractBaseUser):
         verbose_name_plural = _('users')
 
 
+
+
     def __str__(self):
         return self.email
 
@@ -44,7 +47,7 @@ class User(AbstractBaseUser):
         return self.is_admin
 
     def get_absolute_url(self):
-        return reverse("accounts:dash", kwargs={"pk": self.pk})
+        return reverse("accounts:dash", kwargs={"pk": Profile.user})
 
 
 
@@ -71,4 +74,5 @@ class Profile(models.Model):
             return self.phone_number
         return self.user.email
 
-
+    def get_absolute_url(self):
+        return reverse("accounts:dash", kwargs={"pk": self.pk})
