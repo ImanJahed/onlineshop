@@ -7,14 +7,15 @@ services:
 
     image: postgres:15-alpine
     volumes:
-      - ./postgres/data:/var/libpostgresql/data
+      - ./postgres/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     expose:
       - 5432
-    
+    ports:
+      - 5432:5432
     restart: always
 
   backend:
@@ -25,14 +26,14 @@ services:
 
     volumes:
       - ./core:/usr/src/app
-
     working_dir: /usr/src/app
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
-
     environment:
       - DEBUG=True
+    env_file:
+      - ./envs/dev/django/.env
     restart: always
     depends_on:
       - db
@@ -54,4 +55,4 @@ services:
 
 
 volumes:
-  smtp4dev-data: 
+  smtp4dev-data:

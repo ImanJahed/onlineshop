@@ -152,5 +152,10 @@ cython_debug/
 #.idea/
 
 .editorconfig
-.vscode/
+.vscode
+docs
+envs
+postgres
+dockerfiles
+docker-compose.yml/
 

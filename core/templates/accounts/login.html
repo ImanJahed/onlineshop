@@ -1,0 +1,19 @@
+<h1>Login View</h1>
+
+
+{% if messages %}
+
+{% for message in messages %}
+{{message}}
+{% endfor %}
+
+{% endif %}
+
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    {{form}}
+    {% comment %} <input type="text" name="next" value="{{request.GET.next}}"> {% endcomment %}
+    <a href="{% url 'password_reset' %}">Reset Password</a>
+    <button type="submit">Login</button>
+</form>
