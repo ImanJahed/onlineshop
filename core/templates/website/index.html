@@ -1,8 +1,13 @@
 <h1>This is index</h1>
 
-{{request.user}}
 
 
-<form action="{% url 'logout' %}" method="get">
-    <button type="submit">Logout</button>
-</form>
+<p>
+    {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+</p>
+
+
