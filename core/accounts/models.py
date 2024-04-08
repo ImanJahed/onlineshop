@@ -45,7 +45,7 @@ def user_image_path(instance, file_name):
 
 
 class CustomerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     phone = models.CharField(max_length=12, blank=True, null=True, validators=[phone_validator])
     national_code = models.CharField(max_length=10,blank=True, null=True, validators=[national_code_validator])
     first_name = models.CharField(max_length=150, null=True, blank=True, validators=[name_validator])
@@ -57,6 +57,9 @@ class CustomerProfile(models.Model):
 
     def __str__(self) -> str:
         return self.user.email
+
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
 
     @receiver(post_save, sender=User)
     def create_profile(sender, instance, created, **kwargs):

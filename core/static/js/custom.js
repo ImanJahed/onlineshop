@@ -96,3 +96,11 @@
       )
     })
   })()
+
+
+function pageChange(pageNumber){
+  let urlParam = new URLSearchParams(window.location.search)
+  urlParam.set('page', pageNumber)
+  let new_url = window.location.pathname + '?' + urlParam.toString()
+  window.location.href = new_url
+}

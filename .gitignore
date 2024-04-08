@@ -154,4 +154,4 @@ cython_debug/
 .editorconfig
 .vscode/
 postgres/data/*
-
+core/media

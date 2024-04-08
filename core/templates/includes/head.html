@@ -23,7 +23,13 @@
     <link rel="stylesheet" href="{% static 'vendor/toastify/toastify.css' %}">
     <!-- Toastify Css CDN -->
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"> -->
-    
+    <script>
+        function menuToggle() {
+            const toggleMenu = document.querySelector(".menu");
+            toggleMenu.classList.toggle("active");
+          }
+
+    </script>
     {% block extra_css %} {% endblock extra_css %}
 
     {% block extra_css_no_compress %} {% endblock extra_css_no_compress %}

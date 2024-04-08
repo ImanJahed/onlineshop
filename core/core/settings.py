@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Local Apps
     'website.apps.WebsiteConfig',
     'accounts.apps.AccountsConfig',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
@@ -151,19 +152,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # User Configuration
 AUTH_USER_MODEL = 'accounts.User'
 
+LOGOUT_REDIRECT_URL = 'website:index'
+
 # SMTP Configuration
-if DEBUG:
+# if DEBUG:
 
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# else:
 
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = config('EMAIL_HOST', default='smtpdev')
-    EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=False)
-    EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=False)
-    EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
-    EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#     EMAIL_HOST = config('EMAIL_HOST', default='smtpdev')
+#     EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=False)
+#     EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=False)
+#     EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
+#     EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+#     EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 PASSWORD_RESET_TIMEOUT_DAYS = 2
 
@@ -195,3 +198,12 @@ MESSAGE_TAGS = {
 
 
 CELERY_BROKER_URL = 'amqp://localhost'
+from datetime import timedelta
+
+# فراخوانی و تنظیمات جهت فراخوانی وظیفه ها به صورت خودکار
+CELERY_BEAT_SCHEDULE = {
+    'send_newsletter_emails': {
+        'task': 'website.tasks.send_newsletter_emails_task',
+        'schedule': timedelta(minutes=1),  # هر 24 ساعت یکبار
+    },
+}

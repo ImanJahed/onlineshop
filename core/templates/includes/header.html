@@ -1,121 +1,149 @@
 {% load static %}
 <div class="container">
-    <nav class="js-mega-menu navbar-nav-wrap">
-      <!-- Default Logo -->
-      <a class="navbar-brand" href="/index.html" aria-label="Front">
-        <img class="navbar-brand-logo" src="{% static 'svg/logos/logo.svg' %}" alt="Logo">
-      </a>
-      <!-- End Default Logo -->
+  <nav class="js-mega-menu navbar-nav-wrap">
+    <!-- Default Logo -->
+    <a class="navbar-brand" href="/index.html" aria-label="Front">
+      <img class="navbar-brand-logo" src="{% static 'svg/logos/logo.svg' %}" alt="Logo">
+    </a>
+    <!-- End Default Logo -->
 
-      <!-- Toggler -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-default">
-          <i class="bi-list"></i>
-        </span>
-        <span class="navbar-toggler-toggled">
-          <i class="bi-x"></i>
-        </span>
-      </button>
-      <!-- End Toggler -->
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-default">
+        <i class="bi-list"></i>
+      </span>
+      <span class="navbar-toggler-toggled">
+        <i class="bi-x"></i>
+      </span>
+    </button>
+    <!-- End Toggler -->
 
-      <!-- Collapse -->
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" href="{% url 'website:index' %}">صفحه اصلی</a>
-          </li>
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'website:index' %}">صفحه اصلی</a>
+        </li>
 
-          <!-- Dropdown -->
-          <li class="hs-has-sub-menu nav-item">
-            <a id="listingsDropdown" class="hs-mega-menu-invoker nav-link dropdown-toggle " href="#" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">لیست محصولات</a>
-            <div class="hs-sub-menu dropdown-menu" aria-labelledby="listingsDropdown" style="min-width: 14rem;">
-              <a class="dropdown-item " href="/products-list.html">فهرست</a>
-              <a class="dropdown-item " href="/products-grid.html">فهرست (شبکه)</a>
-            </div>
-          </li>
-          <!-- End Dropdown -->
+        <!-- Dropdown -->
+        <li class="hs-has-sub-menu nav-item">
+          <a class="hs-mega-menu-invoker nav-link  " href="{% url 'shop:product_grid' %}">لیست محصولات</a>
+          {% comment %} <div class="hs-sub-menu dropdown-menu" aria-labelledby="listingsDropdown"
+            style="min-width: 14rem;"> {% endcomment %}
+            {% comment %} <a class="dropdown-item " href="/products-list.html">فهرست</a> {% endcomment %}
+            {% comment %} <a class="dropdown-item " href="/products-grid.html">فهرست (شبکه)</a> {% endcomment %}
+            {% comment %} </div> {% endcomment %}
+        </li>
+        <!-- End Dropdown -->
 
-          <li class="nav-item">
-            <a class="nav-link " href="/product-overview.html">بررسی اجمالی محصولات</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/product-overview.html"> درباره ما </a>
+        </li>
 
-          <!-- Pages -->
-          <li class="hs-has-mega-menu nav-item" data-hs-mega-menu-item-options='{
+        <!-- Pages -->
+        <li class="hs-has-mega-menu nav-item" data-hs-mega-menu-item-options='{
                 "desktop": {
                   "position": "right",
                   "maxWidth": "27rem"
                 }
               }'>
-            <a id="pagesMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle " aria-current="page" href="#"
-              role="button" data-bs-toggle="dropdown" aria-expanded="false">صفحات</a>
+          <a  class="hs-mega-menu-invoker nav-link  " href="{% url 'website:contact-us' %}"
+             aria-expanded="false">تماس با ما</a>
 
-            <!-- Mega Menu -->
-            <div class="hs-mega-menu dropdown-menu" aria-labelledby="pagesMegaMenu" style="min-width: 27rem;">
-              <div class="navbar-dropdown-menu-inner">
-                <span class="dropdown-header">عناصر</span>
+          <!-- Mega Menu -->
+          {% comment %} <div class="hs-mega-menu dropdown-menu" aria-labelledby="pagesMegaMenu" style="min-width: 27rem;">
+            <div class="navbar-dropdown-menu-inner">
+              <span class="dropdown-header">عناصر</span>
 
-                <div class="row">
-                  <div class="col-sm mb-3 mb-sm-0">
-                    <a class="dropdown-item " href="/categories.html">دسته بندی ها</a>
-                    <a class="dropdown-item " href="/categories-sidebar.html">نوار کناری دسته ها</a>
-                    <a class="dropdown-item " href="/empty-cart.html">سبد خالی</a>
-                  </div>
-                  <!-- End Col -->
-
-                  <div class="col-sm">
-                    <a class="dropdown-item " href="/cart.html">سبد خرید</a>
-                    <a class="dropdown-item " href="/checkout.html">بررسی</a>
-                    <a class="dropdown-item " href="/order-completed.html">سفارش تکمیل شد</a>
-                  </div>
-                  <!-- End Col -->
+              <div class="row">
+                <div class="col-sm mb-3 mb-sm-0">
+                  <a class="dropdown-item " href="/categories.html">دسته بندی ها</a>
+                  <a class="dropdown-item " href="/categories-sidebar.html">نوار کناری دسته ها</a>
+                  <a class="dropdown-item " href="/empty-cart.html">سبد خالی</a>
                 </div>
-                <!-- End Row -->
-              </div>
+                <!-- End Col -->
 
-              <!-- Mega Menu Banner -->
-              <div class="navbar-dropdown-menu-shop-banner">
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <img class="navbar-dropdown-menu-shop-banner-img" src="{% static 'img/mockups/img4.png' %}"
-                      alt="Image Description">
-                  </div>
-
-                  <div class="flex-grow-1 p-4">
-                    <span class="h4 d-block text-primary">برنده تی شرت</span>
-                    <p>یکی از تی شرت های برند Front ما را برنده شوید.</p>
-                    <a class="btn btn-sm btn-soft-primary btn-transition" href="/index.html">بیشتر بدانید <i
-                        class="bi-chevron-left small"></i></a>
-                  </div>
+                <div class="col-sm">
+                  <a class="dropdown-item " href="/cart.html">سبد خرید</a>
+                  <a class="dropdown-item " href="/checkout.html">بررسی</a>
+                  <a class="dropdown-item " href="/order-completed.html">سفارش تکمیل شد</a>
                 </div>
+                <!-- End Col -->
               </div>
-              <!-- End Mega Menu Banner -->
+              <!-- End Row -->
             </div>
-            <!-- End Mega Menu -->
-          </li>
-          <!-- End Pages -->
 
-          <li class="nav-item">
-            <!-- Search -->
-            <button class="btn btn-ghost-secondary btn-icon" type="button" data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasNavbarSearch" aria-controls="offcanvasNavbarSearch">
-              <i class="bi-search"></i>
-            </button>
-            <!-- End Search -->
+            <!-- Mega Menu Banner -->
+            <div class="navbar-dropdown-menu-shop-banner">
+              <div class="d-flex">
+                <div class="flex-shrink-0">
+                  <img class="navbar-dropdown-menu-shop-banner-img" src="{% static 'img/mockups/img4.png' %}"
+                    alt="Image Description">
+                </div>
 
-            <!-- Shopping Cart -->
-            <button type="button" class="btn btn-ghost-secondary btn-icon" type="button" data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasNavbarShoppingCart" aria-controls="offcanvasNavbarShoppingCart">
-              <i class="bi-basket"></i>
-              <span class="cart-item-count ">3</span>
-            </button>
-            <!-- End Shopping Cart -->
+                <div class="flex-grow-1 p-4">
+                  <span class="h4 d-block text-primary">برنده تی شرت</span>
+                  <p>یکی از تی شرت های برند Front ما را برنده شوید.</p>
+                  <a class="btn btn-sm btn-soft-primary btn-transition" href="/index.html">بیشتر بدانید <i
+                      class="bi-chevron-left small"></i></a>
+                </div>
+              </div>
+            </div>
+            <!-- End Mega Menu Banner -->
+          </div> {% endcomment %}
+          <!-- End Mega Menu -->
+        </li>
+        <!-- End Pages -->
 
-            <a class="btn btn-primary btn-transition" href="{% url 'login' %}">ورود</a>
-          </li>
-        </ul>
-      </div>
-      <!-- End Collapse -->
-    </nav>
-  </div>
+        <li class="nav-item">
+          <!-- Search -->
+          <button class="btn btn-ghost-secondary btn-icon" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbarSearch" aria-controls="offcanvasNavbarSearch">
+            <i class="bi-search"></i>
+          </button>
+          <!-- End Search -->
+
+          <!-- Shopping Cart -->
+          <button type="button" class="btn btn-ghost-secondary btn-icon" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbarShoppingCart" aria-controls="offcanvasNavbarShoppingCart">
+            <i class="bi-basket"></i>
+            <span class="cart-item-count ">3</span>
+          </button>
+          <!-- End Shopping Cart -->
+
+
+
+          {% if request.user.is_authenticated %}
+
+
+          <button class="btn btn-ghost-secondary btn-icon" id="dropdownMenuLink" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="avatar avatar-sm avatar-circle">
+              <img class="avatar-img" src="{% static 'profile-assets/avatar.jpg' %}" alt="Image Description">
+            </span>
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+            {% if user.username %}
+            <h6 class="text-center mt-2">{{user.username}}</h6>
+            {% elif user.email %}
+            <h6 class="text-center mt-2">{{user.email}}</h6>
+            {% else %}
+            <h6 class="text-center mt-2">{{user.profile.get_ful_name}}</h6>
+            {% endif %}
+
+            <a class="dropdown-item" href="">پروفایل</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
+          </div>
+          {% else %}
+          <a class="btn btn-primary btn-transition" href="{% url 'login' %}">ورود</a>
+          {% endif %}
+
+        </li>
+      </ul>
+    </div>
+    <!-- End Collapse -->
+  </nav>
+</div>
