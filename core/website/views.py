@@ -3,12 +3,11 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 
-
 from website.forms import ContactUsForm, NewsLetterForm
 from website.models import ContactUsModel, NewsLetterModel
 
-# Create your views here.
 
+# Create your views here.
 class Index(TemplateView):
     template_name = 'website/index.html'
 
