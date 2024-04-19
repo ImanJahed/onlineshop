@@ -276,11 +276,11 @@
                   </h4>
                   {% if product.is_discount %}
                   <div class="d-flex align-items-center">
-                    <h3 class="card-text text-dark mb-0 mx-3">{{product.show_price.price_discount}}</h3>
-                    <span class="ms-2"><del>{{product.show_price.price}}</del></span>
+                    <h3 class="card-text text-dark mb-0 mx-3 formatted-price">{{product.discount_price}} تومان</h3>
+                    <span class="ms-2"><del class="formatted-price">{{product.price}} تومان</del></span>
                   </div>
                   {% else %}
-                  <h3 class="card-text text-dark">{{product.show_price.price}} تومان </h3>
+                  <h3 class="card-text text-dark formatted-price">{{product.price}} تومان </h3>
 
                   {% endif %}
                 </div>
@@ -298,8 +298,9 @@
                     <span class="small">0</span>
                   </a>
                   <!-- End Rating -->
-
-                  <button type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">افزودن به سبد خرید</button>
+					{% csrf_token %}
+                  <button type="button" onclick="addToCart(`{{ product.id }}`)" id="add-to-cart" data-url= {% url "cart:add-to-cart" %}
+				  data-csrf="{{ csrf_token }}" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">افزودن به سبد خرید</button>
                 </div>
               </div>
               <!-- End Card -->
@@ -433,5 +434,4 @@
   {% endblock content %}
 	{% block extra_js %}
 		<script src="{% static 'js/custom-jquery.js' %}"></script>
-
 	{% endblock extra_js %}

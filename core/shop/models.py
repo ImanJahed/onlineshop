@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from unidecode import unidecode
+
 
 
 # Create your models here.
@@ -85,7 +85,7 @@ class ProductModel(models.Model):
         _("Brief Description"), max_length=150, null=True, blank=True
     )
 
-    categories = models.ManyToManyField(CategoryModel, verbose_name=_("Categories"), related_name='category')
+    categories = models.ManyToManyField(CategoryModel, verbose_name=_("Categories"), related_name='category', blank=True)
 
     stock = models.PositiveIntegerField(_("Stock"), default=0)
     price = models.DecimalField(_("Price"), max_digits=9, decimal_places=0)
@@ -139,8 +139,9 @@ class ProductModel(models.Model):
     def save(self, *args, **kwargs) -> None:
         if self.stock == 0:
             self.status = 2
+
         if not self.slug:
-            self.slug = self.persian_slugify(self.title)
+            self.slug = slugify(self.title)
 
         return super().save(*args, **kwargs)
 
@@ -166,9 +167,6 @@ class ProductModel(models.Model):
                     style="border-radius: 5px;" />'
         )
 
-    def persian_slugify(value):
-        ascii_text = unidecode(value)
 
-        return slugify(ascii_text)
 
 
