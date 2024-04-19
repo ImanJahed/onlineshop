@@ -11,8 +11,7 @@ class AddToCartView(View):
         cart = Cart(request)
         product_id = request.POST.get("product_id")
         cart.add_to_cart(product_id)
-        # product = get_object_or_404(ProductModel, id=product_id)
-        # cart.add(product)
+
 
         return JsonResponse(
             {"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity()}
