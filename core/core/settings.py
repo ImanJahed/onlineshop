@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'website.apps.WebsiteConfig',
     'accounts.apps.AccountsConfig',
     'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
+    'dashboard.apps.DashboardConfig',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.test_cart'
             ],
         },
     },
@@ -207,3 +210,55 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(minutes=1),  # هر 24 ساعت یکبار
     },
 }
+from django.contrib.auth.password_validation import (
+    MinimumLengthValidator,
+    CommonPasswordValidator,
+    NumericPasswordValidator,
+)
+
+# تنظیمات پیش‌فرض برای اعتبارسنجی رمز عبور
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+#         "OPTIONS": {
+#             "min_length": 8,
+#         },
+#         "ERROR_MESSAGES": {
+#             "min_length": "رمز عبور باید حداقل ۸ کاراکتر داشته باشد.",
+#         },
+#     },
+#     {
+#         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+#         "ERROR_MESSAGES": {
+#             "password_too_common": "رمز عبور نمی‌تواند یکی از رمزهای متداول باشد.",
+#         },
+#     },
+#     {
+#         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+#         "ERROR_MESSAGES": {
+#             "password_entirely_numeric": "رمز عبور نمی‌تواند به طور کامل عددی باشد.",
+#         },
+#     },
+#     # اعتبارسنجی سفارشی را اضافه کنید در اینجا
+# ]
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {
+            "min_length": 8,
+        },
+        "ERROR_MESSAGES": {
+            "min_length": "رمز عبور باید حداقل ۸ کاراکتر داشته باشد.",
+         },
+    },
+
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+]

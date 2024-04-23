@@ -38,7 +38,7 @@ class ProductDiscountFilter(admin.SimpleListFilter):
             return queryset.filter(discount_percent__gt=20)
 
         if self.value() == 'lees_20':
-            return queryset.filter(discount_percent_lt=20)
+            return queryset.filter(discount_percent__lt=20)
 
 @admin.register(ProductModel)
 class ProductAdmin(admin.ModelAdmin):

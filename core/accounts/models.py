@@ -1,16 +1,18 @@
-from django.db import models
+import datetime
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.dispatch import receiver
+from django.db import models
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
-
 from .manager import UserManager
-from .validators import phone_validator, name_validator, national_code_validator
+from .validators import name_validator, national_code_validator, phone_validator
+
 # Create your models here.
 
 
 class UserType(models.IntegerChoices):
+    # attr =   value, label
     Customer = 1, _("Customer")
     Vendor = 2, _("Vendor")
     Admin = 3, _("Admin")
@@ -41,16 +43,24 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 def user_image_path(instance, file_name):
-    return f"{instance.id}/%Y-%m-%d/{file_name}"
+    return f"profile/{instance.id}/{file_name}"
 
 
-class CustomerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    phone = models.CharField(max_length=12, blank=True, null=True, validators=[phone_validator])
-    national_code = models.CharField(max_length=10,blank=True, null=True, validators=[national_code_validator])
-    first_name = models.CharField(max_length=150, null=True, blank=True, validators=[name_validator])
-    last_name = models.CharField(max_length=150, null=True, blank=True, validators=[name_validator])
-    profile_img = models.ImageField(upload_to=user_image_path)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    phone = models.CharField(
+        max_length=12, blank=True, null=True
+    )
+    national_code = models.CharField(
+        max_length=10, blank=True, null=True, validators=[national_code_validator]
+    )
+    first_name = models.CharField(
+        max_length=150, null=True, blank=True
+    )
+    last_name = models.CharField(
+        max_length=150, null=True, blank=True
+    )
+    image = models.ImageField(upload_to="profile/", default="default.jpg")
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -59,10 +69,11 @@ class CustomerProfile(models.Model):
         return self.user.email
 
     def get_full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        if self.first_name or self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        return "کاربر جدید"
 
     @receiver(post_save, sender=User)
     def create_profile(sender, instance, created, **kwargs):
         if created:
-            CustomerProfile.objects.create(user=instance)
-
+            Profile.objects.create(user=instance)
