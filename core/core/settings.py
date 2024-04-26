@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'dashboard.apps.DashboardConfig',
+    'ckeditor', 
+    'django.forms',
 ]
 
 MIDDLEWARE = [
@@ -262,3 +264,20 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+
+# Ckeditor Config
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+# FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    }
+}

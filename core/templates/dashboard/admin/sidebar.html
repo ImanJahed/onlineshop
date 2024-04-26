@@ -30,14 +30,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url "dashboard:admin:security-edit" %}">
-              <i class="bi-shield-shaded nav-icon {% if request.resolver_match.url_name == 'security-edit' %}active{% endif %}"></i> تنظیمات امنیتی
+            <a class="nav-link {% if request.resolver_match.url_name == 'security-edit' %}active{% endif %}" href="{% url "dashboard:admin:security-edit" %}">
+              <i class="bi-shield-shaded nav-icon "></i> تنظیمات امنیتی
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url "dashboard:admin:profile-edit" %}">
-              <i class="bi-sliders nav-icon {% if request.resolver_match.url_name == 'profile-edit' %}active{% endif %}"></i> تنظیمات پروفایل
+            <a class="nav-link {% if request.resolver_match.url_name == 'profile-edit' %}active{% endif %}" href="{% url "dashboard:admin:profile-edit" %}">
+              <i class="bi-sliders nav-icon "></i> تنظیمات پروفایل
             </a>
           </li>
         </ul>
@@ -48,7 +48,7 @@
         <!-- List -->
         <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
           <li class="nav-item">
-            <a class="nav-link" href="./admin-account-products.html">
+            <a class="nav-link {% if request.resolver_match.url_name == 'product-list' %}active{% endif %}" href="{% url "dashboard:admin:product-list" %}">
               <i class="bi-shop-window nav-icon"></i> محصولات
             </a>
           </li>

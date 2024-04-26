@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <!-- Breadcrumb -->
+    <div class="navbar-dark bg-dark" style="background-image: url(./assets/svg/components/wave-pattern-light.svg);">
+      <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">داشبورد</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light mb-0">
+                <li class="breadcrumb-item">حساب</li>
+                <li class="breadcrumb-item active" aria-current="page">تنظیمات کاربری</li>
+              </ol>
+            </nav>
+            <!-- End Breadcrumb -->
+          </div>
+          <!-- End Col -->
+
+          <div class="col-auto">
+            <div class="d-none d-lg-block">
+              <a class="btn btn-soft-light btn-sm" href="{% url "logout" %}">خروج</a>
+            </div>
+
+            <!-- Responsive Toggle Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+    </div>
+    <!-- End Breadcrumb -->
+
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+        {% include "dashboard/customer/sidebar.html" %}
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+
+            <div class="card mb-3">
+                <div class="card-header border-bottom">
+                    <h4 class="card-header-title">ویرایش تصویر</h4>
+                </div>
+                <!-- Body -->
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label form-label">عکس پروفایل</label>
+            
+                        <div class="col-sm-9">
+                            <!-- Media -->
+            
+                            <form action="{% url 'dashboard:customer:profile-image-edit' %}" method="post"
+                                class="d-flex align-items-center" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <!-- Avatar -->
+                                <label class="avatar avatar-xl avatar-circle" for="avatarUploader">
+                                    <img id="avatarImg"class="avatar-img" src="{{request.user.profile.image.url}}"
+                                        alt="Image Description">
+                                </label>
+            
+                                <div class="d-grid d-sm-flex gap-2 me-4">
+                                    <div class="form-attachment-btn btn btn-white btn-sm">آپلود عکس
+                                        <input type="file" name="image" class="form-attachment-btn-label" id="avatarUploader">
+            
+                                    </div>
+                                    <!-- End Avatar -->
+            
+                                    <button type="submit" class="btn btn-primary btn-sm">ارسال</button>
+                                </div>
+                            </form>
+            
+                            <!-- End Media -->
+                        </div>
+                    </div>
+                    <!-- End Form -->
+                </div>
+            </div>
+
+
+
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h4 class="card-header-title">اطلاعات پایه</h4>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <form action="{% url "dashboard:customer:profile-edit" %}" method="post">
+                  {% csrf_token %}
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">
+                        نام و نام خانوادگی
+                         <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Displayed on public forums, such as Front."></i>
+                    </label>
+
+                    <div class="col-sm-9">
+                      <div class="input-group">
+                        <input type="text" class="form-control" name="first_name" id="firstNameLabel"
+                          placeholder="نام" aria-label="Clarice" value="{% if request.user.profile.first_name %} {{request.user.profile.first_name}}{% else %}کاربر{% endif %}">
+                        <input type="text" class="form-control" name="last_name" id="lastNameLabel" placeholder="نام خانوادگی"
+                          aria-label="Boone" value="{% if request.user.profile.last_name %}{{request.user.profile.last_name}}{% else %}جدید{% endif %}">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="emailLabel" class="col-sm-3 col-form-label form-label">ایمیل</label>
+
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" name="email" id="emailLabel"
+                        placeholder="clarice@example.com" aria-label="clarice@example.com" value="{{request.user.email}}" disabled="disabled">
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+                  <!-- Form -->
+                  <div class="js-add-field row mb-4" data-hs-add-field-options='{
+                          "template": "#addPhoneFieldTemplate",
+                          "container": "#addPhoneFieldContainer",
+                          "defaultCreated": 0
+                        }'>
+                    <label for="phoneLabel" class="col-sm-3 col-form-label form-label">تلفن <span
+                        class="form-label-secondary">(اختیاری)</span></label>
+
+                    <div class="col-sm-9">
+                      <div class="input-group">
+                        <input type="text" class="js-input-mask form-control" name="phone" id="phoneLabel"
+                          placeholder="+x(xxx)xxx-xx-xx" name="phone" value="{% if request.user.profile.phone %}{{request.user.profile.phone}}{% endif %}" >
+
+                      </div>
+
+                      <!-- Container For Input Field -->
+                      <div id="addPhoneFieldContainer"></div>
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+              </div>
+              <!-- End Body -->
+
+              <!-- Footer -->
+              <div class="card-footer pt-0">
+                <div class="d-flex justify-content-end gap-3">
+
+                  <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                </div>
+              </div>
+            </form>
+
+              <!-- End Footer -->
+            </div>
+            <!-- End Card -->
+
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content -->
+    {% endblock content %}

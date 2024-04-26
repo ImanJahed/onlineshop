@@ -6,8 +6,8 @@
   <!-- ========== MAIN CONTENT ========== -->
 
     <!-- Breadcrumb -->
-    <div class="bg-light">
-      <div class="container py-4">
+    <div class="container content-space-t-2 content-space-t-lg-3">
+
         <div class="row">
           <div class="col-sm">
             <h4 class="mb-0">شبکه محصولات</h4>
@@ -32,7 +32,7 @@
           <!-- End Col -->
         </div>
         <!-- End Row -->
-      </div>
+
     </div>
     <!-- End Breadcrumb -->
 
@@ -243,8 +243,8 @@
               <div class="card card-bordered shadow-none text-center h-100">
                 <div class="card-pinned">
 
-                  {% if product.images.first %}
-                  <img class="card-img-top" src="{{product.images.first.image.url }}" alt="Image Description">
+                  {% if product.image %}
+                  <img class="card-img-top" src="{{product.image.url }}" alt="Image Description">
                   {% else %}
                   <img class="card-img-top" src="{% static 'img2.jpg' %}" alt="Image Description">
                   {% endif %}
@@ -276,11 +276,11 @@
                   </h4>
                   {% if product.is_discount %}
                   <div class="d-flex align-items-center">
-                    <h3 class="card-text text-dark mb-0 mx-3 formatted-price">{{product.discount_price}} تومان</h3>
-                    <span class="ms-2"><del class="formatted-price">{{product.price}} تومان</del></span>
+                    <h3 class="card-text text-dark mb-0 mx-3 formatted-price">{{product.discount_price}} </h3>
+                    <span class="ms-2"><del class="formatted-price">{{product.price}} </del></span>
                   </div>
                   {% else %}
-                  <h3 class="card-text text-dark formatted-price">{{product.price}} تومان </h3>
+                  <h3 class="card-text text-dark formatted-price">{{product.price}}  </h3>
 
                   {% endif %}
                 </div>

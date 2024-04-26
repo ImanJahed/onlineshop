@@ -1,25 +1,26 @@
 from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
-from .models import CategoryModel, ImageModel, ProductModel
+from .models import ProductCategoryModel, ProductImageModel, ProductModel
 
 
 # Register your models here.
 
-@admin.register(CategoryModel)
+@admin.register(ProductCategoryModel)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['title']
     search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}
 
-@admin.register(ImageModel)
+@admin.register(ProductImageModel)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ['title', 'product']
+    list_display = ['product']
+    search_fields = ['product__title']
 
 
 class ImageTabularInline(admin.TabularInline):
-    model = ImageModel
+    model = ProductImageModel
     extra = 1
 
 # Filter by product discount percent
@@ -39,6 +40,7 @@ class ProductDiscountFilter(admin.SimpleListFilter):
 
         if self.value() == 'lees_20':
             return queryset.filter(discount_percent__lt=20)
+
 
 @admin.register(ProductModel)
 class ProductAdmin(admin.ModelAdmin):

@@ -4,10 +4,10 @@ from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from pathlib import Path
-
+from django.core.files import File
 from faker import Faker
 
-from shop.models import ProductModel, CategoryModel, ImageModel
+from shop.models import ProductModel, ProductCategoryModel, ProductImageModel
 
 
 
@@ -34,7 +34,7 @@ class Command(BaseCommand):
         fake = Faker(locale='fa_IR')
 
         user = get_user_model().objects.get(type=4)
-        cat = CategoryModel.objects.all()
+        cat = ProductCategoryModel.objects.all()
 
         for _ in range(20):
             title = " ".join([fake.word() for _ in range(1,3)]) # 2 word generate and join with space
@@ -46,7 +46,8 @@ class Command(BaseCommand):
             discount_percent = fake.random_int(min=0, max=35)
             status = random.randrange(1,3)
             display_status = random.randrange(1,3)
-
+            selected_image = random.choice(IMAGES)
+            image_obj = File(file=open(BASE_DIR / selected_image,"rb"),name=Path(selected_image).name)
 
             product = ProductModel.objects.create(
                 user=user,
@@ -58,7 +59,8 @@ class Command(BaseCommand):
                 discount_percent=discount_percent,
                 status=status,
                 display_status=display_status,
-                price=price
+                price=price,
+                image=image_obj,
             )
 
             num_categories = random.randint(1, 4)

@@ -1,7 +1,7 @@
 
 from django.views.generic import ListView, DetailView
 
-from .models import ProductModel, CategoryModel
+from .models import ProductModel, ProductCategoryModel
 
 # Create your views here.
 
@@ -31,13 +31,13 @@ class ProductGridView(ListView):
         if categories := self.request.GET.get('categories'):
             print(categories)
             qs = qs.filter(categories__title=categories)
-            print(qs)
+   
         return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['count_product'] = self.get_queryset().count()
-        context['categories'] = CategoryModel.objects.all()
+        context['categories'] = ProductCategoryModel.objects.all()
         return context
 
 

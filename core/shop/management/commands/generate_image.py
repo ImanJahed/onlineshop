@@ -5,7 +5,7 @@ from django.core.files import File
 from pathlib import Path
 from faker import Faker
 
-from shop.models import ImageModel, ProductModel
+from shop.models import ProductImageModel, ProductModel
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -35,13 +35,12 @@ class Command(BaseCommand):
             selected_image = random.choice(IMAGES)
             image = File(file=open(BASE_DIR / selected_image, 'rb'), name=Path(selected_image).name)
 
-            ImageModel.objects.create(
-                title=title,
-                image=image,
+            ProductImageModel.objects.create(
+                file=image,
                 product=product
             )
 
-        check_image = ImageModel.objects.all().count()
+        check_image = ProductImageModel.objects.all().count()
         self.stdout.write(self.style.SUCCESS(f"Number of Image: {check_image}"))
 
 

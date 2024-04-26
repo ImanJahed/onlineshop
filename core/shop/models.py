@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-
+from ckeditor.fields import RichTextField
 
 
 # Create your models here.
@@ -16,37 +16,35 @@ def image_path(instance, filename):
 
 
 class ProductStatus(models.IntegerChoices):
-    available = 1, _("Available")
-    unavailable = 2, _("Unavailable")
+    available = 1, _("موجود")
+    unavailable = 2, _("ناموجود")
 
 
 class ProductDisplayStatus(models.IntegerChoices):
-    display = 1, _("Display")
-    no_display = 2, _("No Display")
+    display = 1, _("نمایش")
+    no_display = 2, _("عدم نمایش")
 
 
-class ImageModel(models.Model):
-    title = models.CharField(_("Title"), max_length=50)
-    image = models.ImageField(_("Image"), upload_to=image_path, default='img2.jpg')
+class ProductImageModel(models.Model):
     product = models.ForeignKey(
         "ProductModel",
         verbose_name=_("Product"),
         on_delete=models.CASCADE,
         related_name="images",
     )
+    file = models.ImageField(_("Image"), upload_to="product/extra-img/", default='default/img4.jpg')
+
 
     class Meta:
         verbose_name = "Image"
         verbose_name_plural = "Images"
 
     def __str__(self):
-        return self.title
-
-    def clean(self) -> None:
-        self.title = self.title.title()
+        return self.product.title
 
 
-class CategoryModel(models.Model):
+
+class ProductCategoryModel(models.Model):
     title = models.CharField(_("Title"), max_length=50)
     slug = models.SlugField(_("Slug"), allow_unicode=True)
 
@@ -80,13 +78,14 @@ class ProductModel(models.Model):
 
     title = models.CharField(_("Title"), max_length=50)
     slug = models.SlugField(_("Slug"), allow_unicode=True)
-    description = models.TextField(_("Description"), null=True, blank=True)
+    # description = models.TextField(_("Description"), null=True, blank=True)
+    description = RichTextField(_("description"), blank=True, null=True)
     brief_description = models.CharField(
         _("Brief Description"), max_length=150, null=True, blank=True
     )
 
-    categories = models.ManyToManyField(CategoryModel, verbose_name=_("Categories"), related_name='category', blank=True)
-
+    categories = models.ManyToManyField(ProductCategoryModel, verbose_name=_("Categories"), related_name='category', blank=True)
+    image = models.ImageField(default="/default/img4.jpg",upload_to="product/img/")
     stock = models.PositiveIntegerField(_("Stock"), default=0)
     price = models.DecimalField(_("Price"), max_digits=9, decimal_places=0)
     discount_percent = models.PositiveIntegerField(_("Discount Percent"), default=0)
@@ -155,8 +154,8 @@ class ProductModel(models.Model):
             self.brief_description = self.brief_description.title()
 
     def thumbnail(self):
-        if self.images.exists():
-            image = self.images.first().image.url
+        if self.image:
+            image = self.image.url
 
             return mark_safe(
                 f'<img src={image} width=50px height=50px object-fit="cover" \

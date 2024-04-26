@@ -20,7 +20,8 @@ class ContactUsCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('website:contact-us')
     success_message = "درخواست شما با موفقیت ثبت شد."
 
-
+class AboutUsView(TemplateView):
+    template_name = 'website/page-about.html'
 class NewsLetterCreateView(SuccessMessageMixin, CreateView):
     model = NewsLetterModel
     form_class = NewsLetterForm
