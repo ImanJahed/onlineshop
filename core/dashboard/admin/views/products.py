@@ -10,10 +10,10 @@ from django.contrib.auth import views as auth_views
 from dashboard.admin.forms import *
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from accounts.models import Profile
+
 from django.shortcuts import redirect
 from django.contrib import messages
-from shop.models import ProductModel, ProductCategoryModel, ProductStatus
+from shop.models import ProductModel, ProductCategoryModel
 from django.core.exceptions import FieldError
 
 
@@ -109,13 +109,13 @@ class AdminProductAddImageView(LoginRequiredMixin, HasAdminAccessPermission, Cre
     def form_valid(self, form):
         form.instance.product = ProductModel.objects.get(
             pk=self.kwargs.get('pk'))
-        # handle successful form submission
+
         messages.success(
             self.request, 'تصویر مورد نظر با موفقیت ثبت شد')
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # handle unsuccessful form submission
+
         messages.error(
             self.request, 'اشکالی در ارسال تصویر رخ داد لطفا مجدد امتحان نمایید')
         return redirect(reverse_lazy('dashboard:admin:product-edit', kwargs={'pk': self.kwargs.get('pk')}))
