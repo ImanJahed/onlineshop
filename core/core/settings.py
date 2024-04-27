@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    # 3rd Party Apps
+
 
     # Local Apps
     'website.apps.WebsiteConfig',
@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'dashboard.apps.DashboardConfig',
+    'order.apps.OrderConfig',
+    
+    # 3rd Party Apps
     'ckeditor', 
     'django.forms',
 ]

@@ -71,3 +71,24 @@ class Profile(models.Model):
     def create_profile(sender, instance, created, **kwargs):
         if created:
             Profile.objects.create(user=instance)
+
+
+class AddressModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    address = models.CharField(max_length=250)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    zip_code = models.CharField(max_length=10)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    
+    class Meta:
+        verbose_name = _("Address")
+        verbose_name_plural = _("Addresses")
+
+    def __str__(self):
+        return self.user
+
