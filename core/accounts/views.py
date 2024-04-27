@@ -4,12 +4,13 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CustomPasswordResetForm
+from django.conf import settings
 
-from .forms import LoginForm
+from .forms import AuthenticationForm
 
 
 class LoginView(auth_views.LoginView):
-    form_class = LoginForm
+    form_class = AuthenticationForm
     template_name = "accounts/login.html"
     redirect_authenticated_user = True
 
@@ -25,24 +26,23 @@ class LoginView(auth_views.LoginView):
             return resolve_url("website:index")
 
 
-
-from django.conf import settings
-
-
 class LogoutView(auth_views.LogoutView):
     """Set LOGOUT_REDIRECT_URL for redirect user after logout without showing a logout template"""
+
     pass
 
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     # form_class = CustomPasswordResetForm ==> If use celery uncomment this code
 
-    template_name = 'accounts/page-reset-password-simple.html'
-    email_template_name = 'accounts/password_reset_temp/password_reset_email.html'
-    subject_template_name = 'accounts/password_reset_temp/password_reset_subject.txt'
-    success_message = "We've emailed you instructions for setting your password,"\
-                      "if an account exists with the email you entered. You should receive them shortly."\
-                      "If you don't receive an email, " \
-                      "please make sur you've entered the address you registered with, and check your spam folder."
+    template_name = "accounts/page-reset-password-simple.html"
+    email_template_name = "accounts/password_reset_temp/password_reset_email.html"
+    subject_template_name = "accounts/password_reset_temp/password_reset_subject.txt"
+    success_message = (
+        "We've emailed you instructions for setting your password,"
+        "if an account exists with the email you entered. You should receive them shortly."
+        "If you don't receive an email, "
+        "please make sur you've entered the address you registered with, and check your spam folder."
+    )
 
-    success_url = reverse_lazy('website:index')
+    success_url = reverse_lazy("website:index")

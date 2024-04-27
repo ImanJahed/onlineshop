@@ -48,18 +48,12 @@ def user_image_path(instance, file_name):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    phone = models.CharField(
-        max_length=12, blank=True, null=True
-    )
+    phone = models.CharField(max_length=12, blank=True, null=True)
     national_code = models.CharField(
         max_length=10, blank=True, null=True, validators=[national_code_validator]
     )
-    first_name = models.CharField(
-        max_length=150, null=True, blank=True
-    )
-    last_name = models.CharField(
-        max_length=150, null=True, blank=True
-    )
+    first_name = models.CharField(max_length=150, null=True, blank=True)
+    last_name = models.CharField(max_length=150, null=True, blank=True)
     image = models.ImageField(upload_to="profile/", default="default.jpg")
 
     created_date = models.DateTimeField(auto_now_add=True)

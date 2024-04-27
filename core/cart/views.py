@@ -6,30 +6,6 @@ from .cart import Cart
 
 
 # Create your views here.
-class AddToCartView(View):
-    def post(self, request, *args, **kwargs):
-        cart = Cart(request)
-        product_id = request.POST.get("product_id")
-        cart.add_to_cart(product_id)
-
-
-        return JsonResponse(
-            {"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity()}
-        )
-
-
-class UpdateCartView(View):
-
-    def post(self, request, *args, **kwargs):
-        cart = Cart(request)
-        product_id = request.POST.get("product_id")
-        quantity = request.POST.get("quantity")
-
-        cart.cart_update(product_id, quantity)
-
-        return JsonResponse(
-            {"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity()}
-        )
 
 
 class CartSummaryView(View):
@@ -42,11 +18,43 @@ class CartSummaryView(View):
         return render(request, self.template_name, context)
 
 
-class RemoveCartItemView(View):
-
+class AddToCartView(View):
     def post(self, request, *args, **kwargs):
         cart = Cart(request)
-        product_id = request.POST.get('product_id')
+        product_id = request.POST.get("product_id")
+        cart.add_to_cart(product_id)
+
+        if request.user.is_authenticated:
+            cart.merge_session_cart_in_db(request.user)
+
+        return JsonResponse(
+            {"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity()}
+        )
+
+
+class UpdateCartView(View):
+    def post(self, request, *args, **kwargs):
+        cart = Cart(request)
+        product_id = request.POST.get("product_id")
+        quantity = request.POST.get("quantity")
+
+        cart.cart_update(product_id, quantity)
+
+        if request.user.is_authenticated:
+            cart.merge_session_cart_in_db(request.user)
+
+        return JsonResponse(
+            {"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity()}
+        )
+
+
+class RemoveCartItemView(View):
+    def post(self, request, *args, **kwargs):
+        cart = Cart(request)
+        product_id = request.POST.get("product_id")
         cart.remove_item(product_id)
 
-        return JsonResponse({'message': "Product Deleted."})
+        if request.user.is_authenticated:
+            cart.merge_session_cart_in_db(request.user)
+
+        return JsonResponse({"message": "Product Deleted."})

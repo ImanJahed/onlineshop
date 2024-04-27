@@ -8,7 +8,7 @@ from .models import ProductModel, ProductCategoryModel
 
 class ProductGridView(ListView):
     template_name = 'shop/products-grid.html'
-    paginate_by = 3
+    paginate_by = 9
 
     def get_paginate_by(self, queryset):
         return self.request.GET.get('page_size', self.paginate_by)

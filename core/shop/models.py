@@ -116,7 +116,7 @@ class ProductModel(models.Model):
                 self.price * (100 - self.discount_percent)
             ) / 100
             return round(price_after_discount_percent)
-        return self.price
+
 
     def show_price(self):
         """Showing price with separate by , in template"""

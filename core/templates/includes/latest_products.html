@@ -15,7 +15,7 @@
                 <div class="card-pinned">
 
                     {% if latest_product.images.first %}
-                        <img class="card-img-top" src="{{latest_product.images.first.image.url}}" alt="Image Description">
+                        <img class="card-img-top" src="{{latest_product.image.url}}" alt="Image Description">
                     {% else %}
                         <img class="card-img-top" src="{% static 'img/300x180/img3.jpg' %}" alt="Image Description">
                     {% endif %}
@@ -46,11 +46,11 @@
 
                     {% if latest_product.is_discount %}
                     <div class="d-flex align-items-center">
-                      <h3 class="card-text text-dark mb-0 mx-3">{{latest_product.show_price.price_discount}}</h3>
-                      <span class="ms-2"><del>{{latest_product.show_price.price}}</del></span>
+                      <h3 class="card-text text-dark mb-0 mx-3 formatted-price">{{latest_product.discount_price}}</h3>
+                      <span class="ms-2"><del class="formatted-price">{{latest_product.price}}</del></span>
                     </div>
                     {% else %}
-                    <h3 class="card-text text-dark">{{latest_product.show_price.price}} تومان </h3>
+                    <h3 class="card-text text-dark formatted-price">{{latest_product.price}} تومان </h3>
 
                     {% endif %}
 
@@ -70,7 +70,8 @@
                     </a>
                     <!-- End Rating -->
 
-                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill">افزودن به سبد
+                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" onclick="addToCart(`{{ latest_product.id }}`)" id="add-to-cart" data-url= {% url "cart:add-to-cart" %}
+                    data-csrf="{{ csrf_token }}" >افزودن به سبد
                         خرید</button>
                 </div>
             </div>
