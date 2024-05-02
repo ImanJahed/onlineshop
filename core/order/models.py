@@ -1,3 +1,4 @@
+from decimal import Decimal
 import random
 import string
 from django.db import models
@@ -9,8 +10,6 @@ User = get_user_model()
 
 
 # Create your models here.
-
-
 class OrderStatus(models.IntegerChoices):
     pending = 1, "در انتظار پرداخت"
     processing = 2, "در حال پردازش"
@@ -24,10 +23,11 @@ class CouponModel(models.Model):
     discount_price = models.PositiveIntegerField(
         default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]
     )
-    limit_usage = models.PositiveIntegerField(default=10)
+    max_limit_usage = models.PositiveIntegerField(default=10)
 
-    used_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    used_by = models.ManyToManyField(User, related_name="coupon_user", blank=True)
 
+    expiration_date = models.DateTimeField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
@@ -64,8 +64,8 @@ class OrderModel(models.Model):
         verbose_name = "Order"
         verbose_name_plural = "Orders"
 
-    def __str__(self) -> str:
-        return f"{self.user.email} - {self.order_id}"
+    def __str__(self):
+        return self.order_id
 
     def _generate_random_code(self):
         rand = random.SystemRandom()
@@ -75,12 +75,24 @@ class OrderModel(models.Model):
     def save(self, *args, **kwargs):
         if self.pk:
             return super().save(*args, **kwargs)
-        
-        self.order_id = f'{self.pk}-{self._generate_random_code()}'
+
+        self.order_id = f"{self._generate_random_code()}"
         return super().save(*args, **kwargs)
 
+    def calculate_total_price(self):
+        return sum(item.price * item.quantity for item in self.order_items.all())
+
+    def get_price(self):
+        if self.coupon:
+            return self.calculate_total_price() * (1 - Decimal(self.coupon.discount_price / 100))
+        
+        return self.calculate_total_price()
+
+
 class OrderItemModel(models.Model):
-    order = models.OneToOneField(OrderModel, on_delete=models.CASCADE)
+    order = models.ForeignKey(
+        OrderModel, on_delete=models.CASCADE, related_name="order_items"
+    )
     product = models.ForeignKey("shop.ProductModel", on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(default=0, max_digits=10, decimal_places=0)
@@ -92,5 +104,5 @@ class OrderItemModel(models.Model):
         verbose_name = "Order Item"
         verbose_name_plural = "Order Items"
 
-    def __str__(self) -> str:
-        return f"{self.product} - {self.order}"
+    def __str__(self):
+        return f"{self.product.title} - {self.order}"

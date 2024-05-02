@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Profile
+from .models import Profile, AddressModel
 
 # Register your models here.
 User = get_user_model()
@@ -61,6 +61,19 @@ class ProfileAdmin(admin.ModelAdmin):
         return obj.user.username
 
     user_username.short_description = "Username"
+
+
+@admin.register(AddressModel)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = [
+        "user",
+        "address",
+        "city",
+        "state",
+        "zip_code",
+    ]
+
+    search_fields = ["user"]
 
 
 admin.site.register(User, CustomUserAdmin)

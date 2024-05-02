@@ -183,3 +183,46 @@ function removeCartItem(productID) {
     }
   });
 }
+function applyCoupon(total_price, total_tax){
+  $('#total-price').text(total_price)
+  $('#total-tax').text(total_tax)
+
+  formatPriceInToman(document.getElementById("total-price"))
+  formatPriceInToman(document.getElementById("total-tax"))
+}
+function validateCoupon(){
+  const code = $('#coupon-code').val()
+  const url = $('#coupon-code').data('url')
+  const csrfmiddlewaretoken = $('#coupon-code').data('csrf')
+  console.log(code, url, csrfmiddlewaretoken)
+  $.ajax({
+    method: 'POST',
+    url: url,
+    data: {
+      code: code,
+      csrfmiddlewaretoken: csrfmiddlewaretoken,
+
+    },
+    success: function(response) {
+      console.log(response)
+      Toastify({
+        text:response.message,
+        className: `info`,
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+      }).showToast();
+      applyCoupon(response.total_price, response.total_tax)
+      // applyDiscount(response.total_price,response.total_tax)
+    },
+    error: function(jqXHR,textStatus, errorThrown) {
+      Toastify({
+        text:jqXHR.responseJSON.message,
+        className: `error`,
+        style: {
+          background: "red",
+        }
+      }).showToast();
+    }
+  })
+}

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   <!-- Breadcrumb -->
+   <div class="navbar-dark bg-dark" style="background-image: url(./assets/svg/components/wave-pattern-light.svg);">
+    <div class="container content-space-1 content-space-b-lg-3">
+      <div class="row align-items-center">
+        <div class="col">
+          <div class="d-none d-lg-block">
+            <h1 class="h2 text-white">داشبورد</h1>
+          </div>
+
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light mb-0">
+              <li class="breadcrumb-item">حساب</li>
+              <li class="breadcrumb-item active" aria-current="page"> ویرایش نشانی </li>
+            </ol>
+          </nav>
+          <!-- End Breadcrumb -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-auto">
+          <div class="d-none d-lg-block">
+            <a class="btn btn-soft-light btn-sm" href="{% url "logout" %}">خروج</a>
+          </div>
+
+          <!-- Responsive Toggle Button -->
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-default">
+              <i class="bi-list"></i>
+            </span>
+            <span class="navbar-toggler-toggled">
+              <i class="bi-x"></i>
+            </span>
+          </button>
+          <!-- End Responsive Toggle Button -->
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+  </div>
+  <!-- End Breadcrumb -->
+
+  <!-- Content -->
+  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+    <div class="row">
+      <div class="col-lg-3">
+        <!-- Navbar -->
+      {% include "dashboard/customer/sidebar.html" %}
+        <!-- End Navbar -->
+      </div>
+      <!-- End Col -->
+
+      <div class="col-lg-9">
+        <div class="d-grid gap-3 gap-lg-5">
+          <!-- Card -->
+
+          <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h4 class="card-header-title">ویرایش نشانی </h4>
+            </div>
+        
+            <form action="." method="post">
+                <!-- Body -->
+                <div class="card-body">
+                    <!-- Form -->
+        
+                    {% csrf_token %}
+        
+        
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-md-4  mb-4">
+                            <label class="col-form-label form-label">استان</label>
+                            {{form.state}}
+                        </div>
+                        <!-- End Form -->
+                        <!-- Form -->
+                        <div class="col-md-4  mb-4">
+                            <label class=" col-form-label form-label">شهر</label>
+                            {{form.city}}
+                        </div>
+                        <!-- End Form -->
+                        <!-- Form -->
+                        <div class="col-md-4  mb-4">
+                            <label class=" col-form-label form-label">کد پستی</label>
+                            {{form.zip_code}}
+                        </div>
+                        <!-- End Form -->
+                    </div>
+                    <!-- Form -->
+                    <div class="row mb-4">
+                        <label class="col-form-label form-label">آدرس</label>
+                        {{form.address}}
+                    </div>
+                    <!-- End Form -->
+        
+        
+                </div>
+                <!-- End Body -->
+        
+                <!-- Footer -->
+                <div class="card-footer pt-0">
+                    <div class="d-flex justify-content-end gap-3">
+                        <a class="btn btn-danger" href="{% url 'dashboard:customer:address-delete' pk=object.pk %}">حذف</a>
+                        <a class="btn btn-secondary" href="{% url 'dashboard:customer:address-list' %}">بازگشت</a>
+                        <button class="btn btn-primary" type="submit">ذخیره تغییرات</button>
+                    </div>
+                </div>
+            </form>
+            <!-- End Footer -->
+        </div>
+
+
+
+
+        </div>
+      </div>
+      <!-- End Col -->
+    </div>
+    <!-- End Row -->
+  </div>
+  <!-- End Content -->
+
+<!-- Card -->
+
+<!-- End Card -->
+
+{% endblock content %}

@@ -90,5 +90,5 @@ class AddressModel(models.Model):
         verbose_name_plural = _("Addresses")
 
     def __str__(self):
-        return self.user
+        return self.user.email
 

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="navbar-dark bg-dark" style="background-image: url(./assets/svg/components/wave-pattern-light.svg);">
+    <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="d-none d-lg-block">
+                    <h1 class="h2 text-white">داشبورد</h1>
+                </div>
+
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light mb-0">
+                        <li class="breadcrumb-item">حساب</li>
+                        <li class="breadcrumb-item active" aria-current="page"> حذف نشانی  </li>
+                    </ol>
+                </nav>
+                <!-- End Breadcrumb -->
+            </div>
+            <!-- End Col -->
+
+            <div class="col-auto">
+                <div class="d-none d-lg-block">
+                    <a class="btn btn-soft-light btn-sm" href="{% url "logout" %}">خروج</a>
+                </div>
+
+                <!-- Responsive Toggle Button -->
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-default">
+                        <i class="bi-list"></i>
+                    </span>
+                    <span class="navbar-toggler-toggled">
+                        <i class="bi-x"></i>
+                    </span>
+                </button>
+                <!-- End Responsive Toggle Button -->
+            </div>
+            <!-- End Col -->
+        </div>
+        <!-- End Row -->
+    </div>
+</div>
+<!-- End Breadcrumb -->
+
+<!-- Content -->
+<div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- Navbar -->
+            {% include "dashboard/customer/sidebar.html" %}
+            <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-9">
+            <div class="d-grid gap-3 gap-lg-5">
+                <!-- Card -->
+
+                <div class="card">
+                    <!-- Header -->
+                    <div class="card-header border-bottom">
+                        <h5 class="card-header-title">حذف نشانی</h5>
+                    </div>
+                    <!-- End Header -->
+                
+                    <!-- Body -->
+                    <form action="." method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="row d-flex ">
+                                <p> آیا از حذف نشانی زیر اطمینان دارید؟</p>
+                                <div class="row">
+                                     <span>شناسه نشانی  : {{object.pk}}</span>
+                                     <span> نشانی  : {{object.state}},{{object.city}},{{object.address}} ,{{object.zip_code}}</span>
+                                </div>
+                
+                            </div>
+                            <div class="card-footer">
+                                <div class=" d-flex pt-5 justify-content-end">
+                                    <button type="submit" class="btn btn-danger ms-3">تایید حذف</button>
+                                    <a class="btn btn-secondary ms-3" href="{% url 'dashboard:customer:address-edit' pk=object.pk %}">بازگشت</a>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+
+
+
+
+            </div>
+        </div>
+        <!-- End Col -->
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Content -->
+
+<!-- Card -->
+
+<!-- End Card -->
+
+{% endblock content %}

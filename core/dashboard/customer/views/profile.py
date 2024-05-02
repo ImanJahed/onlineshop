@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib import messages
 
-from dashboard.customer.froms.profile import CustomerPasswordChangeForm, CustomerProfileEditForm
+from dashboard.customer.forms.profile import CustomerPasswordChangeForm, CustomerProfileEditForm
 from dashboard.permissions import HasCustomerAccessPermission
 from accounts.models import Profile
 

@@ -39,7 +39,7 @@ class Cart:
             cart[str(product.pk)]["product"] = product
 
         for item in cart.values():
-            item["total_product_price"] = item["product"].price * item["quantity"]
+            item["total_product_price"] = item["product"].discount_price * item["quantity"]
             yield item
 
     def total_price(self):

@@ -6,5 +6,6 @@ app_name = 'admin'
 urlpatterns = [
     path('', include('dashboard.admin.urls.profile')),
     path('', include('dashboard.admin.urls.products')),
+    path('', include('dashboard.admin.urls.coupons')),
 
 ]
