@@ -49,6 +49,11 @@ class Cart:
         del self.cart[product_id]
         self.save()
 
+
+    def clear(self):
+        del self.request.session['cart']
+
+        self.save()
     def sync_cart_items_from_db(self, user):
         cart, created = CartModel.objects.get_or_create(user=user)
         cart_items = CartItem.objects.filter(cart=cart)

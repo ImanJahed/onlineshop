@@ -1,5 +1,6 @@
 from decimal import Decimal
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,10 +8,11 @@ from django.utils import timezone
 
 from cart.models import CartItem, CartModel
 from accounts.models import AddressModel
+from payment.models import PaymentModel
 from order.models import CouponModel, OrderItemModel, OrderModel
 from .permissions import HasCustomerAccessPermission
 from .forms import CheckOutForm
-
+from payment.zarinpal_client import ZarinPalSandBox
 
 # Create your views here.
 class OrderCheckOutView(LoginRequiredMixin, HasCustomerAccessPermission, FormView):
@@ -35,7 +37,9 @@ class OrderCheckOutView(LoginRequiredMixin, HasCustomerAccessPermission, FormVie
         order_obj.total_price = order_obj.get_price()
         order_obj.save()
 
-        return super().form_valid(form)
+        payment_url = self.create_payment(order_obj)
+
+        return redirect(payment_url)
 
     def create_order(self, address):
         """Cerate Object of Order Model"""
@@ -61,9 +65,25 @@ class OrderCheckOutView(LoginRequiredMixin, HasCustomerAccessPermission, FormVie
         """Apply Coupon on order object"""
         order.coupon = coupon
         order.save()
+
         coupon.used_by.add(self.request.user)
         coupon.save()
 
+    def create_payment(self, order):
+        zarinpal = ZarinPalSandBox()
+
+        response = zarinpal.payment_request(int(order.total_price))
+        page_url =zarinpal.generate_payment_url(response.get('Authority'))
+
+        payment_obj = PaymentModel.objects.create(
+            authority_id=response.get('Authority'),
+            amount=order.total_price
+        )
+        order.payment = payment_obj
+        order.save()
+
+        return page_url
+    
     def form_invalid(self, form):
         return super().form_invalid(form)
 
@@ -76,7 +96,7 @@ class OrderCheckOutView(LoginRequiredMixin, HasCustomerAccessPermission, FormVie
         context = super().get_context_data(**kwargs)
         cart = CartModel.objects.get(user=self.request.user)
         context["addresses"] = AddressModel.objects.filter(user=self.request.user)
-        context["total_price"] = cart.calculate_total_price()
+        context["total_price"] = round(cart.calculate_total_price() * (1 + 9 / 100))
         context["total_tax"] = round(cart.calculate_total_price() * 9 / 100)
 
         return context
@@ -109,9 +129,10 @@ class ValidateCouponView(LoginRequiredMixin, HasCustomerAccessPermission, View):
             else:
                 cart = CartModel.objects.get(user=request.user)
                 price = cart.calculate_total_price()
-                total_price = round(price * (1 - Decimal(coupon.discount_price / 100)))
+                total_price_with_out_tax = round(price * (1 - Decimal(coupon.discount_price / 100)))
+                total_tax = round(total_price_with_out_tax * (Decimal(9 / 100)))
 
-                total_tax = round(total_price * (Decimal(9 / 100)))
+                total_price = total_tax + total_price_with_out_tax
 
         return JsonResponse(
             {"message": message, "total_price": total_price, "total_tax": total_tax},
@@ -121,3 +142,6 @@ class ValidateCouponView(LoginRequiredMixin, HasCustomerAccessPermission, View):
 
 class OrderCompletedView(TemplateView):
     template_name = "order/completed.html"
+
+class OrderFailedView(TemplateView):
+    template_name = "order/failed.html"

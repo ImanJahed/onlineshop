@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'dashboard.apps.DashboardConfig',
     'order.apps.OrderConfig',
+    'payment.apps.PaymentConfig',
     
     # 3rd Party Apps
     'ckeditor', 
@@ -272,6 +273,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Ckeditor Config
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
 # FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 CKEDITOR_CONFIGS = {
     'default': {
@@ -284,3 +286,12 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
+
+
+# Payment Gateway Config
+
+MERCHANT_ID = config('MERCHANT_ID', default="4ced0a1e-4ad8-4309-9668-3ea3ae8e8897")
+
+
+SANDBOX = config('SANDBOX', cast=bool, default=True)
+

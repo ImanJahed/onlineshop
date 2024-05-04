@@ -45,4 +45,4 @@ class AdminCouponDeleteView(LoginRequiredMixin, HasAdminAccessPermission, Succes
     template_name = 'dashboard/admin/coupons/coupon-delete.html'
     success_message = 'کد تخفیف با موفقیت حذف شد'
     success_url = reverse_lazy('dashboard:admin:coupon-list')
-    model = CouponModel
+    model = CouponModel # set model for query set or wanna need special queryset use get_queryset
