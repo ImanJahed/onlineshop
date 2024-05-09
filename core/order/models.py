@@ -69,6 +69,18 @@ class OrderModel(models.Model):
 
     def __str__(self):
         return self.order_id
+    
+    def get_status(self):
+        return {
+            "id":self.status,
+            "title":OrderStatus(self.status).name,
+            "label":OrderStatus(self.status).label,
+        }
+
+
+    def get_full_address(self):
+        return f"{self.state},{self.city},{self.address}"
+
 
     def _generate_random_code(self):
         rand = random.SystemRandom()
@@ -94,7 +106,19 @@ class OrderModel(models.Model):
             return price_with_tax
 
         return round(self.calculate_total_price() * Decimal((1 + TAX)))
+    
+    def show_price(self):
+        """Showing price with separate by , in template"""
 
+        # if self.discount_percent:
+        TAX = 9 / 100
+
+        if self.coupon:
+            price_with_out_tax = self.calculate_total_price() * (1 - Decimal(self.coupon.discount_price / 100))
+            price_with_tax = round(price_with_out_tax * Decimal((1 + TAX)))
+            return "{:,}".format(round(price_with_tax)),
+            
+        return "{:,}".format(round(self.calculate_total_price() * Decimal((1 + TAX)))),
 
 class OrderItemModel(models.Model):
     order = models.ForeignKey(

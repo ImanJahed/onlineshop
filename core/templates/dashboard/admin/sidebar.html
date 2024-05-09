@@ -53,12 +53,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./admin-account-order.html">
+            <a class="nav-link {% if request.resolver_match.url_name == 'order-list' %}active{% endif %}" href="{% url "dashboard:admin:order-list" %}">
               <i class="bi-receipt-cutoff nav-icon"></i> سفارشات
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url "dashboard:admin:coupon-list" %}">
+            <a class="nav-link {% if request.resolver_match.url_name == 'coupon-list' %}active{% endif %}" href="{% url "dashboard:admin:coupon-list" %}">
               <i class="bi-ticket-perforated nav-icon"></i> کد تخفیف
             </a>
           </li>

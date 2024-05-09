@@ -7,5 +7,6 @@ urlpatterns = [
     path('', include('dashboard.admin.urls.profile')),
     path('', include('dashboard.admin.urls.products')),
     path('', include('dashboard.admin.urls.coupons')),
+    path('', include('dashboard.admin.urls.orders')),
 
 ]

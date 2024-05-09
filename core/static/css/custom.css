@@ -1,0 +1,22 @@
+.bg-pending {
+    background-color: #495057;
+}
+
+.bg-success {
+    background-color: #198754;
+}
+
+.bg-processing {
+    background-color: #668719;
+}
+
+.bg-shipped {
+    background-color: #198787;
+}
+.bg-delivered {
+    background-color: #192087;
+}
+
+.bg-failed {
+    background-color: #dc3545;
+}

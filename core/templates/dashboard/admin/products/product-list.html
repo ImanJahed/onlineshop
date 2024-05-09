@@ -178,7 +178,7 @@
 
 {% endblock %}
 
-{% block extra_js %} 
+{% block extra_js %}
 
 <script>
     $(document).ready(function () {
@@ -188,37 +188,36 @@
         $("#search-query-filter").val(urlParam.get("q"));
         $("#min-price-filter").val(urlParam.get("min_price"));
         $("#max-price-filter").val(urlParam.get("max_price"));
-        
+
         urlParam.getAll("categories").forEach((element) => {
-          if (element === $(`#categories-filter-${element}`).val()) {
-            $(`#categories-filter-${element}`).prop("checked", true);
-          }
+            if (element === $(`#categories-filter-${element}`).val()) {
+                $(`#categories-filter-${element}`).prop("checked", true);
+            }
         });
-      
+
         $("#order-by-filter").change(function () {
-          selectionOption = $(this).val();
-          urlParam.set("order_by", selectionOption);
-          let newUrl = window.location.pathname + "?" + urlParam.toString();
-          window.location.href = newUrl;
+            selectionOption = $(this).val();
+            urlParam.set("order_by", selectionOption);
+            let newUrl = window.location.pathname + "?" + urlParam.toString();
+            window.location.href = newUrl;
         });
-      
+
         $("#page-size-filter").change(function () {
-          selectionOptionPage = $(this).val();
-          urlParam.set("page_size", selectionOptionPage);
-          let newUrlPage = window.location.pathname + "?" + urlParam.toString();
-          window.location.href = newUrlPage;
+            selectionOptionPage = $(this).val();
+            urlParam.set("page_size", selectionOptionPage);
+            let newUrlPage = window.location.pathname + "?" + urlParam.toString();
+            window.location.href = newUrlPage;
         });
-      
-      });
+
+    });
 
 
-      function changePage(pageNumber) {
+    function changePage(pageNumber) {
         let urlParam = new URLSearchParams(window.location.search);
         urlParam.set("page", pageNumber);
         let new_url = window.location.pathname + "?" + urlParam.toString();
         window.location.href = new_url;
-      }
-      
+    }
 </script>
 
 {% endblock extra_js %}
