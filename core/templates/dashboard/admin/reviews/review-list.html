@@ -1,24 +1,18 @@
 {% extends 'dashboard/admin/base.html' %}
 {% load static %}
-{% load humanize %}
 {% load jformat %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/custom.css' %}">
-{% comment %} <style>
-    
-    .bg-pending {
+<style>
+    .bg-pending{
         background-color: #495057;
     }
-
-    .bg-success {
-        background-color: #198754;
+    .bg-accepted{
+        background-color:  #198754;
     }
-
-    .bg-failed {
-        background-color: #dc3545;
+    .bg-rejected{
+        background-color:  #dc3545;
     }
-
-</style> {% endcomment %}
+</style>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -27,7 +21,7 @@
         <li class="breadcrumb-item">حساب</li>
         <li class="breadcrumb-item"> داشبورد ادمین</li>
         <li class="breadcrumb-item active" aria-current="page">
-            سفارشات
+            نظرات
         </li>
     </ol>
 </nav>
@@ -42,7 +36,7 @@
 
             <!-- Input Card -->
             <div class="col-md-3 py-1">
-                <input type="text" class="form-control form-control-sm" placeholder="جستو جوی سفارش" name="q"
+                <input type="text" class="form-control form-control-sm" placeholder="جستو جوی نظرات" name="q"
                     id="search-query-filter">
 
             </div>
@@ -57,12 +51,12 @@
             <div class="col-md-3 py-1">
                 <select class="form-select form-select-sm" id="order-by-filter">
                     <option value="" selected>مرتب سازی</option>
-                    <option value="-created_date">جدیدترین</option>
-                    <option value="created_date">قدیمی ترین</option>
+                    <option value="-created_at">جدیدترین</option>
+                    <option value="created_at">قدیمی ترین</option>
                 </select>
             </div>
 
-
+           
             <div class="col-md-2 py-1">
                 <select class="form-select form-select-sm" id="page-size-filter">
                     <option value="" selected>تعداد</option>
@@ -92,7 +86,7 @@
                 <!-- Select Group -->
                 <div class="d-sm-flex align-items-sm-center mb-5">
                     <div class="mb-2 mb-sm-0 me-3">
-                        <span><strong class="text-dark">{{ total_items}} سفارش</strong></span>
+                        <span><strong class="text-dark">{{ total_items}} نظر</strong></span>
                     </div>
                 </div>
                 <!-- End Select Group -->
@@ -103,11 +97,12 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">شماره سفارش</th>
-                                    <th scope="col">سفارش دهنده</th>
-                                    <th scope="col">قیمت کل</th>
+                                    <th scope="col">محصول</th>
+                                    <th scope="col">نام و نام خانوادگی</th>
+                                    <th scope="col">امتیاز</th>
                                     <th scope="col">تاریخ ثبت</th>
                                     <th scope="col">وضعیت</th>
+                                    <th scope="col">عملیات</th>
 
                                 </tr>
                             </thead>
@@ -116,17 +111,16 @@
                                 {% with forloop.counter0|add:page_obj.start_index as counter %}
                                 <tr>
                                     <th scope="row">{{counter}}</th>
-                                    <td><a
-                                            href="{% url 'dashboard:admin:order-detail' pk=object.pk %}">{{object.order_id}}</a>
-                                    </td>
+                                    <td>{{object.product.title}}</td>
                                     <td>{{object.user.profile.get_full_name}}</td>
-                                    <td class="">{{object.get_price|intcomma}} تومان</td>
-                                    <td>{{object.created_date|jformat:"%H:%M - %Y/%m/%d"}}</td>
-                                    <td><span
-                                        class="badge bg-{{object.get_status.title}}" >{{object.get_status_display}}     
-                                    </span>
+                                    <td>{{object.rate}}</td>
+                                    <td>{{object.created_at|jformat:" %H:%M - %Y/%m/%d"}}</td>
+                                    <td><span class="badge bg-{{object.get_status.title}}">{{object.get_status.label}}</span></td>
+                                    <td class="d-flex">
+                                        <a class="btn btn-sm btn-icon btn-ghost-secondary"
+                                            href="{% url 'dashboard:admin:review-edit' pk=object.pk %}"><i class="bi-pencil-square"></i></a>
+        
                                     </td>
-
                                 </tr>
                                 {% endwith %}
                                 {% endfor %}
@@ -148,7 +142,7 @@
                                 {% if page_obj.has_previous %}
                                 <li class="page-item">
                                     <button class="page-link"
-                                        onclick="changePage(`{{ page_obj.previous_page_number }}`)"
+                                        onclick="pageChange(`{{ page_obj.previous_page_number }}`)"
                                         aria-label="Previous">
                                         <span aria-hidden="true">
                                             <i class="bi-chevron-double-right small"></i>
@@ -162,23 +156,24 @@
                                 <li class="page-item active"><a class="page-link">{{ i }}</a></li>
                                 {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %} <li
                                     class="page-item">
-                                    <button class="page-link" onclick="changePage(`{{i}}`)">{{ i }}</button></li>
+                                    <button class="page-link" onclick="pageChange(`{{i}}`)">{{ i }}</button></li>
 
-                                {% endif %}
+                                    {% endif %}
 
-                                {% endfor %}
+                                    {% endfor %}
 
 
-                                {% if page_obj.has_next %}
-                                <li class="page-item">
-                                    <button class="page-link" onclick="changePage(`{{ page_obj.next_page_number }}`)"
-                                        aria-label="Previous">
-                                        <span aria-hidden="true">
-                                            <i class="bi-chevron-double-left small"></i>
-                                        </span>
-                                    </button>
-                                </li>
-                                {% endif %}
+                                    {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <button class="page-link"
+                                            onclick="pageChange(`{{ page_obj.next_page_number }}`)"
+                                            aria-label="Previous">
+                                            <span aria-hidden="true">
+                                                <i class="bi-chevron-double-left small"></i>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    {% endif %}
 
                             </ul>
                         </nav>
@@ -207,6 +202,7 @@
 
 {% block extra_js %}
 <script>
+
     $(document).ready(function () {
         let current_url_params = new URLSearchParams(window.location.search)
         $("#page-size-filter").val(current_url_params.get("page_size") || "10")
@@ -230,22 +226,5 @@
         window.location.href = new_url
     });
 
-    function formatPriceInToman(element) {
-        let rawPrice = parseFloat(element.innerText);
-        let formatter = new Intl.NumberFormat('fa-IR');
-        let formattedPrice = formatter.format(rawPrice);
-        element.innerText = `${formattedPrice} تومان`;
-    }
-    function changePage(pageNumber) {
-        let urlParam = new URLSearchParams(window.location.search);
-        urlParam.set("page", pageNumber);
-        let new_url = window.location.pathname + "?" + urlParam.toString();
-        window.location.href = new_url;
-    }
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        let priceElements = document.querySelectorAll('.formatted-price');
-        priceElements.forEach(element => formatPriceInToman(element));
-    });
 </script>
 {% endblock %}

@@ -3,435 +3,458 @@
 
 
 {% block content %}
-  <!-- ========== MAIN CONTENT ========== -->
+<!-- ========== MAIN CONTENT ========== -->
 
-    <!-- Breadcrumb -->
-    <div class="container content-space-t-2 content-space-t-lg-3">
+<!-- Breadcrumb -->
+<div class="container content-space-t-2 content-space-t-lg-3">
 
-        <div class="row">
-          <div class="col-sm">
-            <h4 class="mb-0">شبکه محصولات</h4>
-          </div>
-          <!-- End Col -->
-
-          <div class="col-sm-auto">
-            <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb mb-0 ">
-                <li class="breadcrumb-item ps-2">
-                  <a href="{% url 'website:index' %}">خرید کنید</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="{% url 'shop:product_grid' %}">محصولات</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">توری</li>
-              </ol>
-            </nav>
-            <!-- End Breadcrumb -->
-          </div>
-          <!-- End Col -->
-        </div>
-        <!-- End Row -->
-
+  <div class="row">
+    <div class="col-sm">
+      <h4 class="mb-0">شبکه محصولات</h4>
     </div>
-    <!-- End Breadcrumb -->
+    <!-- End Col -->
 
-    <!-- Card Grid -->
-    <div class="container content-space-t-1 content-space-t-md-2 content-space-b-2 content-space-b-lg-3">
-      <div class="row">
-        <div class="col-lg-3">
-          <!-- Navbar -->
-          <div class="navbar-expand-lg mb-5">
-            <!-- Navbar Toggle -->
-            <div class="d-grid">
-              <button type="button" class="navbar-toggler btn btn-white mb-3" data-bs-toggle="collapse" data-bs-target="#navbarVerticalNavMenu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbarVerticalNavMenu">
-                <span class="d-flex justify-content-between align-items-center">
-                  <span class="text-dark">فیلتر کنید</span>
+    <div class="col-sm-auto">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 ">
+          <li class="breadcrumb-item ps-2">
+            <a href="{% url 'website:index' %}">خرید کنید</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'shop:product_grid' %}">محصولات</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">توری</li>
+        </ol>
+      </nav>
+      <!-- End Breadcrumb -->
+    </div>
+    <!-- End Col -->
+  </div>
+  <!-- End Row -->
+
+</div>
+<!-- End Breadcrumb -->
+
+<!-- Card Grid -->
+<div class="container content-space-t-1 content-space-t-md-2 content-space-b-2 content-space-b-lg-3">
+  <div class="row">
+    <div class="col-lg-3">
+      <!-- Navbar -->
+      <div class="navbar-expand-lg mb-5">
+        <!-- Navbar Toggle -->
+        <div class="d-grid">
+          <button type="button" class="navbar-toggler btn btn-white mb-3" data-bs-toggle="collapse"
+            data-bs-target="#navbarVerticalNavMenu" aria-label="Toggle navigation" aria-expanded="false"
+            aria-controls="navbarVerticalNavMenu">
+            <span class="d-flex justify-content-between align-items-center">
+              <span class="text-dark">فیلتر کنید</span>
 
 
-                  <span class="navbar-toggler-default">
-                    <i class="bi-list"></i>
-                  </span>
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
 
-                  <span class="navbar-toggler-toggled">
-                    <i class="bi-x"></i>
-                  </span>
-                </span>
-              </button>
-            </div>
-            <!-- End Navbar Toggle -->
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </span>
+          </button>
+        </div>
+        <!-- End Navbar Toggle -->
 
-            <!-- Navbar Collapse -->
-            <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
-              <div class="w-100">
-                <!-- Form -->
-                <form action="" method="get">
+        <!-- Navbar Collapse -->
+        <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
+          <div class="w-100">
+            <!-- Form -->
+            <form action="" method="get">
 
-                  <div class="border-bottom pb-4 mb-4">
-                    <h5>جستو جوی کالا</h5>
-                    <div class="d-grid gap-2">
-                        <div class="form-group">
-                            <label class="form-label d-flex" for="search-query-filter">جستو جو</label>
-                            <input class="form-control" placeholder="واژه مورد نظر را وارد نمایید" type="text"
-                                name="q" id="search-query-filter">
-                        </div>
-                    </div>
+              <div class="border-bottom pb-4 mb-4">
+                <h5>جستو جوی کالا</h5>
+                <div class="d-grid gap-2">
+                  <div class="form-group">
+                    <label class="form-label d-flex" for="search-query-filter">جستو جو</label>
+                    <input class="form-control" placeholder="واژه مورد نظر را وارد نمایید" type="text" name="q"
+                      id="search-query-filter">
                   </div>
+                </div>
+              </div>
 
-                  <div class="border-bottom pb-4 mb-4">
-                    <h5>قیمت</h5>
-                    <div class="d-grid gap-2">
+              <div class="border-bottom pb-4 mb-4">
+                <h5>قیمت</h5>
+                <div class="d-grid gap-2">
 
-                        <div class="form-group">
-                            <label class="form-label d-flex" for="min-price-filter">کمترین قیمت</label>
-                            <input class="form-control" type="number" name="min_price"
-                                placeholder="کمترین قیمت مد نظر" id="min-price-filter">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label d-flex" for="max-price-filter">بیشترین قیمت</label>
-                            <input class="form-control" type="number" name="max_price"
-                                placeholder="بیشترین قیمت مد نظر" id="max-price-filter">
-                        </div>
-                    </div>
+                  <div class="form-group">
+                    <label class="form-label d-flex" for="min-price-filter">کمترین قیمت</label>
+                    <input class="form-control" type="number" name="min_price" placeholder="کمترین قیمت مد نظر"
+                      id="min-price-filter">
                   </div>
+                  <div class="form-group">
+                    <label class="form-label d-flex" for="max-price-filter">بیشترین قیمت</label>
+                    <input class="form-control" type="number" name="max_price" placeholder="بیشترین قیمت مد نظر"
+                      id="max-price-filter">
+                  </div>
+                </div>
+              </div>
 
-                  <div class="border-bottom pb-4 mb-4">
-                    <h5>دسته بندی</h5>
+              <div class="border-bottom pb-4 mb-4">
+                <h5>دسته بندی</h5>
+
+                <!-- Checkboxes -->
+                <div class="d-grid gap-2">
+                  {% for category in categories|slice:':7' %}
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{category.title}}" name="categories"
+                      id="categories-filter-{{category.title}}">
+                    <label class="form-check-label d-flex" for="categories-filter">{{category.title}} <span
+                        class="ms-auto">({{category.category.count}})</span></label>
+                  </div>
+                  <!-- End Checkboxes -->
+                  {% endfor %}
+                  <!-- Checkboxes -->
+                  {% comment %} <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="shoesCheckbox">
+                    <label class="form-check-label d-flex" for="shoesCheckbox">کفش <span
+                        class="ms-auto">(0)</span></label>
+                  </div>
+                  <!-- End Checkboxes -->
+
+                  <!-- Checkboxes -->
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="accessoriesCheckbox" checked>
+                    <label class="form-check-label d-flex" for="accessoriesCheckbox">تجهیزات جانبی <span
+                        class="ms-auto">(51)</span></label>
+                  </div>
+                  <!-- End Checkboxes -->
+
+                  <!-- Checkboxes -->
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="topsCheckbox" checked>
+                    <label class="form-check-label d-flex" for="topsCheckbox">تاپ ها <span
+                        class="ms-auto">(5)</span></label>
+                  </div>
+                  <!-- End Checkboxes -->
+
+                  <!-- Checkboxes -->
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="bottomCheckbox">
+                    <label class="form-check-label d-flex" for="bottomCheckbox">پایین <span
+                        class="ms-auto">(11)</span></label>
+                  </div> {% endcomment %}
+                  <!-- End Checkboxes -->
+                </div>
+
+                <!-- View More - Collapse -->
+                <div class="collapse" id="collapseCategory">
+                  <div class="d-grid gap-2">
+                    <!-- Checkboxes -->
+                    {% for category in categories|slice:'8:' %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="{{category.title}}" name="categories"
+                        id="shortsCheckbox">
+                      <label class="form-check-label d-flex" for="shortsCheckbox"> {{category.title}} <span
+                          class="ms-auto">({{category.category.count}})</span></label>
+                    </div>
+                    <!-- End Checkboxes -->
+                    {% endfor %}
+                    {% comment %}
+                    <!-- Checkboxes -->
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="hatsCheckbox">
+                      <label class="form-check-label d-flex" for="hatsCheckbox">کلاه <span
+                          class="ms-auto">(3)</span></label>
+                    </div>
+                    <!-- End Checkboxes -->
 
                     <!-- Checkboxes -->
-                    <div class="d-grid gap-2">
-                      {% for category in categories|slice:':7' %}
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{category.title}}" name="categories" id="categories-filter-{{category.title}}">
-                        <label class="form-check-label d-flex" for="categories-filter">{{category.title}} <span class="ms-auto">({{category.category.count}})</span></label>
-                      </div>
-                      <!-- End Checkboxes -->
-                      {% endfor %}
-                      <!-- Checkboxes -->
-                      {% comment %} <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="shoesCheckbox">
-                        <label class="form-check-label d-flex" for="shoesCheckbox">کفش <span class="ms-auto">(0)</span></label>
-                      </div>
-                      <!-- End Checkboxes -->
-
-                      <!-- Checkboxes -->
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="accessoriesCheckbox" checked>
-                        <label class="form-check-label d-flex" for="accessoriesCheckbox">تجهیزات جانبی <span class="ms-auto">(51)</span></label>
-                      </div>
-                      <!-- End Checkboxes -->
-
-                      <!-- Checkboxes -->
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="topsCheckbox" checked>
-                        <label class="form-check-label d-flex" for="topsCheckbox">تاپ ها <span class="ms-auto">(5)</span></label>
-                      </div>
-                      <!-- End Checkboxes -->
-
-                      <!-- Checkboxes -->
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="bottomCheckbox">
-                        <label class="form-check-label d-flex" for="bottomCheckbox">پایین <span class="ms-auto">(11)</span></label>
-                      </div> {% endcomment %}
-                      <!-- End Checkboxes -->
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="socksCheckbox">
+                      <label class="form-check-label d-flex" for="socksCheckbox">جوراب <span
+                          class="ms-auto">(8)</span></label>
                     </div>
-
-                    <!-- View More - Collapse -->
-                    <div class="collapse" id="collapseCategory">
-                      <div class="d-grid gap-2">
-                        <!-- Checkboxes -->
-                        {% for category in categories|slice:'8:' %}
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="{{category.title}}" name="categories" id="shortsCheckbox">
-                          <label class="form-check-label d-flex" for="shortsCheckbox"> {{category.title}} <span class="ms-auto">({{category.category.count}})</span></label>
-                        </div>
-                        <!-- End Checkboxes -->
-                        {% endfor %}
-                        {% comment %} <!-- Checkboxes -->
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="hatsCheckbox">
-                          <label class="form-check-label d-flex" for="hatsCheckbox">کلاه <span class="ms-auto">(3)</span></label>
-                        </div>
-                        <!-- End Checkboxes -->
-
-                        <!-- Checkboxes -->
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="socksCheckbox">
-                          <label class="form-check-label d-flex" for="socksCheckbox">جوراب <span class="ms-auto">(8)</span></label>
-                        </div>
-                        <!-- End Checkboxes --> {% endcomment %}
-                      </div>
-                    </div>
-                    <!-- End View More - Collapse -->
-
-                    <!-- Link -->
-                    <a class="link-sm link-collapse" href="#collapseCategory" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseCategory">
-                      <span class="link-collapse-default">بیشتر ببینید</span>
-                      <span class="link-collapse-active">کمتر مشاهده کنید</span>
-                    </a>
-                    <!-- End Link -->
-                  </div>
-
-                  <div class="d-grid">
-                    <button type="submit" class="btn btn-white btn-transition"> اعمال فیلتر </button>
-                  </div>
-                </form>
-                <!-- End Form -->
-              </div>
-            </div>
-            <!-- End Navbar Collapse -->
-          </div>
-          <!-- End Navbar -->
-        </div>
-        <!-- End Col -->
-
-        <div class="col-lg-9">
-          <div class="row align-items-center mb-5">
-            <div class="col-sm mb-3 mb-sm-0">
-              <h6 class="mb-0">{{count_product}} محصول</h6>
-            </div>
-
-            <div class="col-sm-auto">
-              <div class="d-sm-flex justify-content-sm-end align-items-center">
-                  <!-- Select -->
-                  <div class="mb-2 mb-sm-0 me-sm-2">
-                      <select class="form-select form-select-sm" name="order_by" id="order-by-filter" >
-                          <option value="" selected>مرتب سازی</option>
-                          <option value="-created_date">جدیدترین</option>
-                          <option value="created_date">قدیمی ترین</option>
-                          <option value="-price">بیشترین قیمت</option>
-                          <option value="price">کمترین قیمت</option>
-                      </select>
-                  </div>
-                  <!-- End Select -->
-                  <!-- Select -->
-                  <div class="mb-2 mb-sm-0 me-sm-2">
-                      <select class="form-select form-select-sm" id="page-size-filter">
-                          <option value="" selected>تعداد در صفحه</option>
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="20">20</option>
-                          <option value="30">30</option>
-                          <option value="50">50</option>
-                      </select>
-                  </div>
-                  <!-- End Select -->
-
-                  <!-- Nav -->
-                  <ul class="nav nav-segment">
-                      <li class="nav-item">
-                          <a class="nav-link active" href="{% url 'shop:product_grid' %}">
-                              <i class="bi-grid-fill"></i>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="#">
-                              <i class="bi-list"></i>
-                          </a>
-                      </li>
-                  </ul>
-                  <!-- End Nav -->
-              </div>
-            </div>
-          </div>
-          <!-- End Row -->
-
-          <div class="row row-cols-sm-2 row-cols-md-3 mb-10">
-            {% for product in object_list %}
-            <div class="col mb-4">
-              <!-- Card -->
-              <div class="card card-bordered shadow-none text-center h-100">
-                <div class="card-pinned">
-
-                  {% if product.image %}
-                  <img class="card-img-top" src="{{product.image.url }}" alt="Image Description">
-                  {% else %}
-                  <img class="card-img-top" src="{% static 'img2.jpg' %}" alt="Image Description">
-                  {% endif %}
-
-
-                  <div class="card-pinned-top-start">
-                    <span class="badge bg-success rounded-pill">جدید</span>
-                  </div>
-
-                  <div class="card-pinned-top-end">
-                    <button type="button" class="btn btn-outline-secondary btn-xs btn-icon rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="افزودن به علایق">
-                      <i class="bi-heart"></i>
-                    </button>
+                    <!-- End Checkboxes --> {% endcomment %}
                   </div>
                 </div>
-                <div class="card-body">
-                  <div class="mb-2">
-                    {% for cat in product.categories.all|slice:':5' %}
-                    <a class="link-sm link-secondary badge-s" href="#">{{cat.title}} </a>
+                <!-- End View More - Collapse -->
 
-                    {% if not forloop.last %}
-                      ,
-                    {% endif %}
-
-                    {% endfor %}
-                  </div>
-                  <h4 class="card-title">
-                    <a class="text-dark" href="{% url 'shop:product_detail' slug=product.slug %}">{{ product.title }}</a>
-                  </h4>
-                  {% if product.is_discount %}
-                  <div class="d-flex align-items-center">
-                    <h3 class="card-text text-dark mb-0 mx-3 formatted-price">{{product.discount_price}} </h3>
-                    <span class="ms-2"><del class="formatted-price">{{product.price}} </del></span>
-                  </div>
-                  {% else %}
-                  <h3 class="card-text text-dark formatted-price">{{product.price}}  </h3>
-
-                  {% endif %}
-                </div>
-
-                <div class="card-footer pt-0">
-                  <!-- Rating -->
-                  <a class="d-inline-flex align-items-center mb-3" href="#">
-                    <div class="d-flex gap-1 ms-2">
-                      <img src="{% static 'svg/illustrations/star-muted.svg' %}" alt="Review rating" width="16">
-                      <img src="{% static 'svg/illustrations/star-muted.svg' %}" alt="Review rating" width="16">
-                      <img src="{% static 'svg/illustrations/star-muted.svg' %}" alt="Review rating" width="16">
-                      <img src="{% static 'svg/illustrations/star-muted.svg' %}" alt="Review rating" width="16">
-                      <img src="{% static 'svg/illustrations/star-muted.svg' %}" alt="Review rating" width="16">
-                    </div>
-                    <span class="small">0</span>
-                  </a>
-                  <!-- End Rating -->
-					{% csrf_token %}
-                  <button type="button" onclick="addToCart(`{{ product.id }}`)" id="add-to-cart" data-url= {% url "cart:add-to-cart" %}
-				  data-csrf="{{ csrf_token }}" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">افزودن به سبد خرید</button>
-                </div>
+                <!-- Link -->
+                <a class="link-sm link-collapse" href="#collapseCategory" role="button" data-bs-toggle="collapse"
+                  aria-expanded="false" aria-controls="collapseCategory">
+                  <span class="link-collapse-default">بیشتر ببینید</span>
+                  <span class="link-collapse-active">کمتر مشاهده کنید</span>
+                </a>
+                <!-- End Link -->
               </div>
-              <!-- End Card -->
-            </div>
-            {% empty %}
-            <div class="row text-center w-100 py-5">
-              <p class="text-center">هیچ کالایی برای نمایش وجود ندارد</p>
-            </div>
-            <!-- End Col -->
-            {% endfor %}
 
-
-            <!-- End Col -->
-          </div>
-          <!-- End Row -->
-
-          <!-- Pagination -->
-
-          {% if is_paginated %}
-
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-
-              {% if page_obj.has_previous %}
-              <li class="page-item">
-                <button class="page-link" onclick="pageChange(`{{page_obj.previous_page_number}}`)" aria-label="Previous">
-                  <span aria-hidden="true">
-                    <i class="bi-chevron-double-right small"></i>
-                  </span>
-                </button>
-              </li>
-              {% endif %}
-
-              {% for i in paginator.page_range %}
-                {% if page_obj.number == i %}
-                  <li class="page-item active"><button onclick="pageChange(`{{i}}`)" class="page-link" href="">{{i}}</button></li>
-                  {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
-                  <li class="page-item"><button onclick="pageChange(`{{i}}`)" class="page-link" >{{i}}</button></li>
-                {% endif %}
-              {% endfor %}
-
-              {% if page_obj.has_next %}
-              <li class="page-item">
-                <button class="page-link" onclick="pageChange(`{{page_obj.next_page_number}}`)" aria-label="Next">
-                  <span aria-hidden="true">
-                    <i class="bi-chevron-double-left small"></i>
-                  </span>
-                </button>
-              </li>
-              {% endif %}
-            </ul>
-          </nav>
-          <!-- End Pagination -->
-          {% endif %}
-        </div>
-        <!-- End Col -->
-      </div>
-      <!-- End Row -->
-    </div>
-    <!-- End Card Grid -->
-
-    <!-- Subscribe -->
-    <div class="bg-light">
-      <div class="container content-space-2">
-        <div class="w-md-75 w-lg-50 text-center mx-md-auto">
-          <div class="row justify-content-lg-between">
-            <!-- Heading -->
-            <div class="mb-5">
-              <span class="text-cap">ثبت نام</span>
-              <h2>اخبار جدید را دریافت کنید</h2>
-            </div>
-            <!-- End Heading -->
-
-            <form>
-              <!-- Input Card -->
-              <div class="input-card input-card-pill input-card-sm border mb-3">
-                <div class="input-card-form">
-                  <label for="subscribeForm" class="form-label visually-hidden">ایمیل را وارد کنید</label>
-                  <input type="text" class="form-control form-control-lg" id="subscribeForm" placeholder="ایمیل خود را وارد کنید" aria-label="ایمیل خود را وارد کنید">
-                </div>
-                <button type="button" class="btn btn-primary btn-lg rounded-pill">ثبت نام</button>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-white btn-transition"> اعمال فیلتر </button>
               </div>
-              <!-- End Input Card -->
             </form>
+            <!-- End Form -->
+          </div>
+        </div>
+        <!-- End Navbar Collapse -->
+      </div>
+      <!-- End Navbar -->
+    </div>
+    <!-- End Col -->
 
-            <p class="small">می توانید در هر زمانی اشتراک خود را لغو کنید <a href="#">سیاست حفظ حریم خصوصی</a> ما را بخوانید</p>
+    <div class="col-lg-9">
+      <div class="row align-items-center mb-5">
+        <div class="col-sm mb-3 mb-sm-0">
+          <h6 class="mb-0">{{count_product}} محصول</h6>
+        </div>
+
+        <div class="col-sm-auto">
+          <div class="d-sm-flex justify-content-sm-end align-items-center">
+            <!-- Select -->
+            <div class="mb-2 mb-sm-0 me-sm-2">
+              <select class="form-select form-select-sm" name="order_by" id="order-by-filter">
+                <option value="" selected>مرتب سازی</option>
+                <option value="-created_date">جدیدترین</option>
+                <option value="created_date">قدیمی ترین</option>
+                <option value="-price">بیشترین قیمت</option>
+                <option value="price">کمترین قیمت</option>
+              </select>
+            </div>
+            <!-- End Select -->
+            <!-- Select -->
+            <div class="mb-2 mb-sm-0 me-sm-2">
+              <select class="form-select form-select-sm" id="page-size-filter">
+                <option value="" selected>تعداد در صفحه</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+            <!-- End Select -->
+
+            <!-- Nav -->
+            <ul class="nav nav-segment">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'shop:product_grid' %}">
+                  <i class="bi-grid-fill"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="bi-list"></i>
+                </a>
+              </li>
+            </ul>
+            <!-- End Nav -->
           </div>
         </div>
       </div>
-    </div>
-    <!-- End Subscribe -->
+      <!-- End Row -->
 
-    <!-- Clients -->
-    <div class="container content-space-2">
-      <div class="row">
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/hollister-dark.svg' %}" alt="Logo">
+      <div class="row row-cols-sm-2 row-cols-md-3 mb-10">
+        {% for product in object_list %}
+        <div class="col mb-4">
+          <!-- Card -->
+          <div class="card card-bordered shadow-none text-center h-100">
+            <div class="card-pinned">
+
+              {% if product.image %}
+              <img class="card-img-top" src="{{product.image.url }}" alt="Image Description">
+              {% else %}
+              <img class="card-img-top" src="{% static 'img2.jpg' %}" alt="Image Description">
+              {% endif %}
+
+
+              <div class="card-pinned-top-start">
+                <span class="badge bg-success rounded-pill">جدید</span>
+              </div>
+
+              <div class="card-pinned-top-end">
+                {% if request.user.is_authenticated %}
+                <button type="button"
+                    class="btn btn-outline-secondary btn-xs btn-icon rounded-circle {% if product.id in wishlist_items %} active {% endif %} "
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-url="{% url "shop:add-or-remove-wishlist" %}" data-csrf="{{csrf_token}}" title="افزودن به علایق"
+                    onclick="addToWishlist(this,`{{product.id}}`)">
+                    <i class="bi-heart"></i>
+                </button>
+                {% endif %}
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="mb-2">
+                {% for cat in product.categories.all|slice:':5' %}
+                <a class="link-sm link-secondary badge-s" href="#">{{cat.title}} </a>
+
+                {% if not forloop.last %}
+                ,
+                {% endif %}
+
+                {% endfor %}
+              </div>
+              <h4 class="card-title">
+                <a class="text-dark" href="{% url 'shop:product_detail' slug=product.slug %}">{{ product.title }}</a>
+              </h4>
+              {% if product.is_discount %}
+              <div class="d-flex align-items-center">
+                <h3 class="card-text text-dark mb-0 mx-3 formatted-price">{{product.discount_price}} </h3>
+                <span class="ms-2"><del class="formatted-price">{{product.price}} </del></span>
+              </div>
+              {% else %}
+              <h3 class="card-text text-dark formatted-price">{{product.price}} </h3>
+
+              {% endif %}
+            </div>
+
+            <div class="card-footer pt-0">
+              <!-- Rating -->
+              <a class="d-inline-flex align-items-center mb-3" href="#">
+                {% for i in "12345" %}
+                {% if i|add:0 <= product.avg_rate %} <span><i class="bi bi-star-fill star-rate"></i></span>
+                {% else %}
+                <span><i class="bi bi-star star-rate"></i></span>
+                {% endif %}
+
+                {% endfor %}
+                <span class="ms-1">{{product.avg_rate}}/5</span>
+              </a>
+              <!-- End Rating -->
+              {% csrf_token %}
+              <button type="button" onclick="addToCart(`{{ product.id }}`)" id="add-to-cart"
+                data-url={% url "cart:add-to-cart" %} data-csrf="{{ csrf_token }}"
+                class="btn btn-outline-primary btn-sm btn-transition rounded-pill">افزودن به سبد خرید</button>
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+        {% empty %}
+        <div class="row text-center w-100 py-5">
+          <p class="text-center">هیچ کالایی برای نمایش وجود ندارد</p>
         </div>
         <!-- End Col -->
+        {% endfor %}
 
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/levis-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
 
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/new-balance-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
-
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/puma-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
-
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/nike-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
-
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/tnf-dark.svg' %}" alt="Logo">
-        </div>
         <!-- End Col -->
       </div>
       <!-- End Row -->
+
+      <!-- Pagination -->
+
+      {% if is_paginated %}
+
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <button class="page-link" onclick="pageChange(`{{page_obj.previous_page_number}}`)" aria-label="Previous">
+              <span aria-hidden="true">
+                <i class="bi-chevron-double-right small"></i>
+              </span>
+            </button>
+          </li>
+          {% endif %}
+
+          {% for i in paginator.page_range %}
+          {% if page_obj.number == i %}
+          <li class="page-item active"><button onclick="pageChange(`{{i}}`)" class="page-link" href="">{{i}}</button>
+          </li>
+          {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+          <li class="page-item"><button onclick="pageChange(`{{i}}`)" class="page-link">{{i}}</button></li>
+          {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <button class="page-link" onclick="pageChange(`{{page_obj.next_page_number}}`)" aria-label="Next">
+              <span aria-hidden="true">
+                <i class="bi-chevron-double-left small"></i>
+              </span>
+            </button>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- End Pagination -->
+      {% endif %}
     </div>
+    <!-- End Col -->
+  </div>
+  <!-- End Row -->
+</div>
+<!-- End Card Grid -->
 
-  <!-- ========== END MAIN CONTENT ========== -->
+<!-- Subscribe -->
+<div class="bg-light">
+  <div class="container content-space-2">
+    <div class="w-md-75 w-lg-50 text-center mx-md-auto">
+      <div class="row justify-content-lg-between">
+        <!-- Heading -->
+        <div class="mb-5">
+          <span class="text-cap">ثبت نام</span>
+          <h2>اخبار جدید را دریافت کنید</h2>
+        </div>
+        <!-- End Heading -->
 
-  {% endblock content %}
-	{% block extra_js %}
-		<script src="{% static 'js/custom-jquery.js' %}"></script>
-	{% endblock extra_js %}
+        <form>
+          <!-- Input Card -->
+          <div class="input-card input-card-pill input-card-sm border mb-3">
+            <div class="input-card-form">
+              <label for="subscribeForm" class="form-label visually-hidden">ایمیل را وارد کنید</label>
+              <input type="text" class="form-control form-control-lg" id="subscribeForm"
+                placeholder="ایمیل خود را وارد کنید" aria-label="ایمیل خود را وارد کنید">
+            </div>
+            <button type="button" class="btn btn-primary btn-lg rounded-pill">ثبت نام</button>
+          </div>
+          <!-- End Input Card -->
+        </form>
+
+        <p class="small">می توانید در هر زمانی اشتراک خود را لغو کنید <a href="#">سیاست حفظ حریم خصوصی</a> ما را بخوانید
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Subscribe -->
+
+<!-- Clients -->
+<div class="container content-space-2">
+  <div class="row">
+    <div class="col text-center py-3">
+      <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/hollister-dark.svg' %}" alt="Logo">
+    </div>
+    <!-- End Col -->
+
+    <div class="col text-center py-3">
+      <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/levis-dark.svg' %}" alt="Logo">
+    </div>
+    <!-- End Col -->
+
+    <div class="col text-center py-3">
+      <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/new-balance-dark.svg' %}" alt="Logo">
+    </div>
+    <!-- End Col -->
+
+    <div class="col text-center py-3">
+      <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/puma-dark.svg' %}" alt="Logo">
+    </div>
+    <!-- End Col -->
+
+    <div class="col text-center py-3">
+      <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/nike-dark.svg' %}" alt="Logo">
+    </div>
+    <!-- End Col -->
+
+    <div class="col text-center py-3">
+      <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/tnf-dark.svg' %}" alt="Logo">
+    </div>
+    <!-- End Col -->
+  </div>
+  <!-- End Row -->
+</div>
+
+<!-- ========== END MAIN CONTENT ========== -->
+
+{% endblock content %}
+{% block extra_js %}
+<script src="{% static 'js/custom-jquery.js' %}"></script>
+{% endblock extra_js %}

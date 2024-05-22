@@ -22,7 +22,6 @@
                 <!-- List Group -->
                 <ul class="list-group list-group-flush list-group-no-gutters mb-5">
                     {% for item in cart %}
-
                     <!-- Item -->
                     <li class="list-group-item">
                         <div class="d-flex">
@@ -36,7 +35,7 @@
                                     src="{% static 'img/320x320/img2.jpg' %} " alt="Image Description"> {% endcomment %}
 
                             </div>
-
+                            
                             <div class="flex-grow-1 ms-3">
                                 <div class="row">
                                     <div class="col-sm-7 mb-3 mb-sm-0">
@@ -115,6 +114,7 @@
                             </div>
                         </div>
                     </li>
+
                     <!-- End Item -->
                     {% empty %}
                     {% endfor %}

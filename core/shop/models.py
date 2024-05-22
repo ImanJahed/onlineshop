@@ -1,4 +1,5 @@
 from datetime import datetime
+from tabnanny import verbose
 
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -98,6 +99,7 @@ class ProductModel(models.Model):
         choices=ProductDisplayStatus.choices,
         default=ProductDisplayStatus.display,
     )
+    avg_rate = models.FloatField(default=0.0)
 
     created_date = models.DateTimeField(_("Created Date"), auto_now_add=True)
     modified_date = models.DateTimeField(_("Modified Date"), auto_now=True)
@@ -136,9 +138,16 @@ class ProductModel(models.Model):
     def is_discount(self):
         return self.discount_percent != 0
 
+    def is_published(self):
+        return True if self.display_status==1 else False
+    
     def save(self, *args, **kwargs) -> None:
         if self.stock == 0:
             self.status = 2
+            self.display_status = 2
+        else:
+            self.status = 1
+            self.display_status = 1
 
         if not self.slug:
             self.slug = slugify(self.title)
@@ -170,3 +179,14 @@ class ProductModel(models.Model):
 
 
 
+class WishlistProductModel(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+
+
+    class Meta:
+        verbose_name = 'WishList'
+        verbose_name_plural = 'WishLists'
+
+    def __str__(self) -> str:
+        return self.product.title

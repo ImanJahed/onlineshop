@@ -1,7 +1,10 @@
+from django.http import JsonResponse
+from django.views.generic import ListView, DetailView, View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.views.generic import ListView, DetailView
+from review.models import ReviewModel
 
-from .models import ProductModel, ProductCategoryModel
+from .models import ProductModel, ProductCategoryModel, WishlistProductModel
 
 # Create your views here.
 
@@ -38,9 +41,42 @@ class ProductGridView(ListView):
         context = super().get_context_data(**kwargs)
         context['count_product'] = self.get_queryset().count()
         context['categories'] = ProductCategoryModel.objects.all()
+        context['wishlist_items'] = WishlistProductModel.objects.filter(user=self.request.user).values_list('product__id', flat=True) if self.request.user.is_authenticated else False
         return context
 
 
 class ProductDetailView(DetailView):
     queryset = ProductModel.objects.filter(status=1, display_status=1)
     template_name = 'shop/product-detail.html'
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        product = self.get_object()
+        context["is_wished"] = WishlistProductModel.objects.filter(
+            user=self.request.user, product__id=product.pk).exists() if self.request.user.is_authenticated else False
+        context['reviews'] = ReviewModel.objects.filter(product=product, status=2).order_by('-created_at')
+
+        return context
+    
+
+
+class AddAndRemoveWishListView(LoginRequiredMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        message = ''
+
+        if product_id:
+            try:
+                wishlist_item = WishlistProductModel.objects.get(user=request.user, product_id=product_id)
+                wishlist_item.delete()
+                message = 'محصول از لیست علایق حذف شد'
+            
+            except WishlistProductModel.DoesNotExist:
+                WishlistProductModel.objects.create(
+                    user=request.user,
+                    product_id=product_id
+                )
+                message = 'محصول به لیست علایق اضافه شد'
+
+        return JsonResponse({'message': message})

@@ -32,7 +32,9 @@ class Cart:
 
     def __iter__(self):
         product_ids = self.cart.keys()
+
         products = ProductModel.objects.filter(id__in=product_ids, status=1)
+        
         cart = self.cart.copy()
 
         for product in products:
@@ -42,6 +44,7 @@ class Cart:
             item["total_product_price"] = item["product"].discount_price * item["quantity"]
             yield item
 
+        
     def total_price(self):
         return sum([item["total_product_price"] for item in self])
 

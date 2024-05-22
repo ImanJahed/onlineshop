@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
+    # 3rd Party Apps
+    'django_jalali',
 
     # Local Apps
     'website.apps.WebsiteConfig',
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'order.apps.OrderConfig',
     'payment.apps.PaymentConfig',
+    'review.apps.ReviewConfig',
     
     # 3rd Party Apps
     'ckeditor', 

@@ -226,3 +226,42 @@ function validateCoupon(){
     }
   })
 }
+
+
+function addToWishlist(element, productId){
+  // console.log(element.getAttribute('class'))
+  // console.log(element.getAttribute('title'))
+  // console.log(element.dataset.url)
+  // console.log(element.dataset.csrf)
+
+
+  const url = element.dataset.url
+  const csrfmiddlewaretoken = element.dataset.csrf
+  $.ajax({
+    method: 'POST',
+    url : url,
+    data : {
+      'product_id': productId,
+      'csrfmiddlewaretoken': csrfmiddlewaretoken
+    },
+    success: function(response){
+      Toastify({
+        text:response.message,
+        className: `info`,
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+      }).showToast();
+      $(element).toggleClass('active');
+    },
+    error: function(jqXHR,textStatus, errorThrown) {
+      Toastify({
+        text:jqXHR.responseJSON.message,
+        className: `error`,
+        style: {
+          background: "red",
+        }
+      }).showToast();
+    }
+  })
+}
